@@ -1,5 +1,5 @@
 
-import autoprefixer from "autoprefixer";
+const autoprefixer = require("autoprefixer");
 
 const config = {
   plugins: [
@@ -8,4 +8,4 @@ const config = {
   ],
 };
 
-export default config;
+module.exports = config;
