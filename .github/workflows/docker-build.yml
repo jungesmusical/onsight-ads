@@ -1,0 +1,40 @@
+name: Docker Build
+
+on:
+  workflow_call:
+
+env:
+  TEST_TAG: ${{ github.repository }}:test
+jobs:
+  docker-build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout Code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+      -
+        # Add support for more platforms with QEMU (optional)
+        # https://github.com/docker/setup-qemu-action
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db # v3.6.1
+      -
+        name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@4f58ea79222b3b9dc2c8bbdd6debcef730109a75 # v6.9.0
+        with:
+          tags: ${{ env.TEST_TAG}}
+          context: .
+          file: ./Dockerfile
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          load: true
+          build-args: |
+            ENV=prod
+      -
+        name: Test the Docker image
+        run: |
+          timeout 10 docker run --rm ${{ env.TEST_TAG}} || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi

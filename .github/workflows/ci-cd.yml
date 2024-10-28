@@ -1,0 +1,35 @@
+name: CI/CD
+
+on:
+  push:
+  release:
+    types: [ published ]
+
+jobs:
+  coding-style:
+    name: Linting
+    uses: ./.github/workflows/coding-style.yml
+  test-build:
+    name: Test build
+    uses: ./.github/workflows/docker-build.yml
+    needs: coding-style
+    if: github.ref != 'refs/heads/main' && github.event_name != 'release'
+  deploy-stage:
+    name: Deploy to Stage
+    if: github.ref == 'refs/heads/main' || github.event_name == 'release'
+    needs: coding-style
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      environment: preview
+      appname: preview--onsight-ads
+  deploy-production:
+    name: Deploy to Production
+    if: github.event_name == 'release'
+    needs:
+      - deploy-stage
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      environment: production
+      appname: onsight-ads

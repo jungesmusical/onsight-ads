@@ -1,0 +1,57 @@
+name: 'Deploy to Dokku'
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        type: string
+        required: true
+      appname:
+        description: 'App name to deploy'
+        type: string
+        required: true
+
+env:
+  DOKKU_HOST: jungesmusical.de
+  DOKKU_PORT: 22
+
+concurrency: 
+  group: ${{ github.workflow }}--${{ inputs.environment }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Start Deployment
+        uses: bobheadxi/deployments@648679e8e4915b27893bd7dbc35cb504dc915bc8 # v1.5.0
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: ${{ inputs.environment }}
+      -
+        name: Cloning repo
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          fetch-depth: 0
+      -
+        name: Push to dokku
+        uses: dokku/github-action@036bf9c07f1b40707a16201bc7a349074c3ec554 # v1.6.1
+        with:
+          git_push_flags: --no-verify # For GIT-LFS
+          git_remote_url: ssh://dokku@${{ env.DOKKU_HOST }}:${{ env.DOKKU_PORT }}/${{ inputs.appname }}
+          ssh_private_key: ${{ secrets.DOKKU_DEPLOY_JUNGESMUSICAL_SRV01 }}
+      -
+        name: Update deployment Status
+        uses: bobheadxi/deployments@648679e8e4915b27893bd7dbc35cb504dc915bc8 # v1.5.0
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
+          env_url: https://${{ inputs.appname }}.${{ env.DOKKU_HOST }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
