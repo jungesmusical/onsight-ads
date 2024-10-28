@@ -25,6 +25,6 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-## UI Components
+## Coding Style
 
-The UI components are based on the [Shadcn](https://ui.shadcn.com/) design system. The components are implemented with <https://www.shadcn-svelte.com>
+This project uses [Prettier](https://prettier.io/) to format code. This is done automatically on commit via a pre-commit hook.
