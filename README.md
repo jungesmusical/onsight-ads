@@ -1,8 +1,18 @@
-# Onsight Ads via Anthias
+# sv
 
-Web Content displayed on a Raspberry Pi using Anthias for Pre-Show Content.
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-Webserver using Node.js that displays cast and crew information dependeing on the current DateTime. Data is requested from Kirby CMS for the current production.
+## Creating a project
+
+If you're seeing this, you've probably already done this step. Congrats!
+
+```bash
+# create a new project in the current directory
+npx sv create
+
+# create a new project in my-app
+npx sv create my-app
+```
 
 ## Developing
 
@@ -25,6 +35,4 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-## UI Components
-
-The UI components are based on the [Shadcn](https://ui.shadcn.com/) design system. The components are implemented with <https://www.shadcn-svelte.com>
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
