@@ -57,6 +57,23 @@
 
   </dl>
 
+  {@const walkInCovers = show.cast.roles.filter(role => role.isWalkInCover)}
+
+  {#if walkInCovers.length > 0}
+    <h2> Walk-In Covers </h2>
+
+    <dl>
+
+    {#each walkInCovers as role}
+
+      <dt>{role.role}</dt>
+      <dd>{role.persons.join(', ')}</dd>
+
+    {/each}
+
+    </dl>
+  {/if}
+
   <h2> Ensemble </h2>
 
   <p>{ show.cast.ensemble.join(', ') }</p>
