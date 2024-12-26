@@ -44,6 +44,23 @@
 
   <p>Es spielt {show.companies.join(', ')}</p>
 
+  <h2> Cast </h2>
+
+  <dl>
+
+  {#each show.cast.roles as role}
+
+    <dt>{role.role}{(role.isWalkInCover ? ' (Walk-In Cover)' : '')}</dt>
+    <dd>{role.persons.join(', ')}</dd>
+
+  {/each}
+
+  </dl>
+
+  <h2> Ensemble </h2>
+
+  <p>{ show.cast.ensemble.join(', ') }</p>
+
 {/each}
 
 {#if nextShowsLive.length === 0}
