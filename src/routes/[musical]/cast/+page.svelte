@@ -50,7 +50,7 @@
 
 {#if numberOfNextShows > 1}
 	<div style="display:flex; justify-content: stretch; margin: 1rem 0; gap: 1rem;">
-		{#each nextShowsLive as show, i}
+		{#each Array.from(Array(numberOfNextShows).keys()) as i}
 			<progress
 				max={MAX_PROGRESS_TIME}
 				value={showIterator === i ? progress : showIterator > i ? MAX_PROGRESS_TIME : 0}

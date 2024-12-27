@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { ShowData, SingleShow } from '$lib/ShowData';
 
 	let { data }: { data: PageData } = $props();
 	const { showData } = data;
