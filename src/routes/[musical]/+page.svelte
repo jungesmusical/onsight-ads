@@ -23,7 +23,7 @@
   let { data }: { data: PageData } = $props();
 	const { showData } = data;
 
-  const TEST_DATE = new Date('2025-03-21 20:00:00');
+  const TEST_DATE = new Date('2025-03-22 20:00:00');
 
   let currentTime = $state(new Date(TEST_DATE));
 
@@ -46,32 +46,28 @@
 
   <h2> Cast </h2>
 
-  <dl>
-
-  {#each show.cast.roles as role}
-
-    <dt>{role.role}{(role.isWalkInCover ? ' (Walk-In Cover)' : '')}</dt>
-    <dd>{role.persons.join(', ')}</dd>
-
-  {/each}
-
-  </dl>
+  <ul class="dot-list">
+    {#each show.cast.roles as role}
+      <li class="dot-list__item">
+        <span class="dot-list__label fw-strong"><span>{role.role}{(role.isWalkInCover ? ' (Walk-In Cover)' : '')}</span></span>
+        <span class="dot-list__label"><span>{role.persons.map((str) => str.replace(' ', ' ')).join(', ')}</span></span>
+      </li>
+    {/each}
+	</ul>
 
   {@const walkInCovers = show.cast.roles.filter(role => role.isWalkInCover)}
 
   {#if walkInCovers.length > 0}
     <h2> Walk-In Covers </h2>
 
-    <dl>
-
-    {#each walkInCovers as role}
-
-      <dt>{role.role}</dt>
-      <dd>{role.persons.join(', ')}</dd>
-
-    {/each}
-
-    </dl>
+    <ul class="dot-list">
+      {#each walkInCovers as role}
+        <li class="dot-list__item">
+          <span class="dot-list__label"><span>{role.role}</span></span>
+          <span class="dot-list__label"><span>{role.persons.join(', ')}</span></span>
+        </li>
+      {/each}
+    </ul>
   {/if}
 
   <h2> Ensemble </h2>

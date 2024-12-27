@@ -1,0 +1,42 @@
+body {
+	font-variant-ligatures: common-ligatures;
+	quotes: "„" "“" "‚" "‘";
+	hyphens: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6,
+ul, ol, dl, p, blockquote, pre, figure {
+	margin: var(--xs) 0;
+}
+
+img {
+	width: 100%;
+	height: auto;
+}
+
+a {
+	color: var(--c-link);
+}
+
+a:hover,
+a:focus {
+	color: var(--c-link-interactive);
+}
+
+ul, ol {
+	padding-inline-start: var(--m);
+	list-style-position: outside;
+
+	& li {
+		padding-left: var(--xxs);
+    margin-bottom: var(--xxs);
+	}
+}
+
+ul {
+	list-style-type: disc;
+}
