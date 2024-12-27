@@ -19,6 +19,8 @@ jobs:
           cache: npm
       - run: npm install
       - run: npm run lint
+        env:
+          PUBLIC_HOMEPAGE_HOST: 'https://www.example.com'
   check:
     runs-on: ubuntu-latest
     steps:
@@ -31,3 +33,5 @@ jobs:
           cache: npm
       - run: npm install
       - run: npm run check
+        env:
+          PUBLIC_HOMEPAGE_HOST: 'https://www.example.com'
