@@ -101,14 +101,14 @@
 		{#each walkInCovers as role}
 			<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
 			<span class="fw-strong">{role.persons.join(', ')}</span
-			>{#if role !== walkInCovers[walkInCovers.length - 1]}{" und "}{:else}.{/if}
+			>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
 		{/each}
 	</p>
 {/if}
 
 <h2>Ensemble</h2>
 
-<p>{show.cast.ensemble.map(str =>str.replace(' ', ' ')).join(', ')}</p>
+<p>{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
 
 {#if nextShowsLive.length === 0}
 	<p class="ta-center">Aktuell keine aktive Veranstaltung...</p>
