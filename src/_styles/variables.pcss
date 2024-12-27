@@ -2,7 +2,7 @@
 	/* Sizes: Renard 10 -> 10, 12.5, 16, 20, 25, 31.5, 40
 		========================================================================== */
 
-	--base: 1.25rem; /* Default: 16px */
+	--base: 1.3rem; /* Default: 16px */
 	--base-xxs: 0.625;
 	--base-xs: 0.78125;
 	--base-s: 1;
@@ -22,15 +22,15 @@
     ========================================================================== */
 
 	--color-palette-red-0: #fff5f5;
-  --color-palette-red-10: #ffe3e3;
-  --color-palette-red-20: #ffc9c9;
-  --color-palette-red-30: #ffa8a8;
-  --color-palette-red-40: #ff8787;
-  --color-palette-red-50: #ff6b6b;
-  --color-palette-red-60: #fa5252;
-  --color-palette-red-70: #f03e3e;
-  --color-palette-red-80: #e03131;
-  --color-palette-red-90: #c92a2a;
+	--color-palette-red-10: #ffe3e3;
+	--color-palette-red-20: #ffc9c9;
+	--color-palette-red-30: #ffa8a8;
+	--color-palette-red-40: #ff8787;
+	--color-palette-red-50: #ff6b6b;
+	--color-palette-red-60: #fa5252;
+	--color-palette-red-70: #f03e3e;
+	--color-palette-red-80: #e03131;
+	--color-palette-red-90: #c92a2a;
 
 	--color-palette-green-0: #ebfbee;
 	--color-palette-green-10: #d3f9d8;
@@ -54,7 +54,6 @@
 	--color-palette-yellow-80: #f08c00;
 	--color-palette-yellow-90: #e67700;
 
-
 	--color-palette-purple-0: #f8f0fc;
 	--color-palette-purple-10: #f3d9fa;
 	--color-palette-purple-20: #eebefa;
@@ -65,7 +64,6 @@
 	--color-palette-purple-70: #ae3ec9;
 	--color-palette-purple-80: #9c36b5;
 	--color-palette-purple-90: #862e9c;
-
 
 	--color-palette-gray-0: #f5f5f5;
 	--color-palette-gray-10: #eeeeee;
@@ -101,8 +99,8 @@
 	--c-error-bg: var(--color-palette-red-10); */
 
 	--c-fg-1: var(--color-palette-gray-0);
-	--c-fg-2: var(--color-palette-gray-10);
-	--c-fg-3: var(--color-palette-gray-20);
+	--c-fg-2: var(--color-palette-gray-20);
+	--c-fg-3: var(--color-palette-gray-40);
 	--c-bg-1: var(--color-palette-black-100);
 	--c-bg-2: var(--color-palette-gray-90);
 	--c-bg-3: var(--color-palette-gray-80);
@@ -117,14 +115,14 @@
 	--c-error-fg: var(--color-palette-red-30);
 	--c-error-bg: var(--color-palette-red-90);
 
-  --c-darken: rgba(var(--color-palette-black-100), 0.05);
+	--c-darken: rgba(var(--color-palette-black-100), 0.05);
 	--c-lighten: rgba(var(--color-palette-white-0), 0.05);
 
 	/* Typography
 		========================================================================== */
 	--ff-serif: 'IBM Plex Serif', 'Georgia', times, serif;
-  --ff-sans: 'IBM Plex Sans', 'Helvetica Neue', arial, sans-serif;
-	--ff-mono: "SFMono-Regular", consolas, "Liberation Mono", menlo, courier, monospace;
+	--ff-sans: 'IBM Plex Sans', 'Helvetica Neue', arial, sans-serif;
+	--ff-mono: 'SFMono-Regular', consolas, 'Liberation Mono', menlo, courier, monospace;
 
 	--fw-regular: 400; /* Regular */
 	--fw-strong: 600; /* SemiBold */
@@ -132,20 +130,20 @@
 	--lsp-regular: normal;
 	--lsp-wide: 0.02rem; /* 0.32px */
 
-	--fs-xxs: calc(var(--base) * 0.75); /* 12px */
-	--fs-xs: calc(var(--base) * 1); /* 16px */
-	--fs-s: calc(var(--base) * 1.25); /* 20px */
-	--fs-m: calc(var(--base) * 1.75); /* 28px */
-	--fs-l: calc(var(--base) * 2); /* 32px */
-	--fs-xl: calc(var(--base) * 2.625); /* 42px */
-	--fs-xxl: calc(var(--base) * 3.375); /* 54px */
+	--type-ratio: 1.2;
 
-	--lh-xxs: calc(var(--base) * 1); /* 20px */
-	--lh-xs: calc(var(--base) * 1.375); /* 22px */
-	--lh-s: calc(var(--base) * 1.5); /* 24px */
-	--lh-m: calc(var(--base) * 2.25); /* 36px */
-	--lh-l: calc(var(--base) * 2.5); /* 40px */
-	--lh-xl: calc(var(--base) * 3.125); /* 50px */
-	--lh-xxl: calc(var(--base) * 4); /* 64px */
+	--fs-xxs: calc(var(--base) * pow(var(--type-ratio), -2));
+	--fs-xs: calc(var(--base) * pow(var(--type-ratio), -1));
+	--fs-s: calc(var(--base) * pow(var(--type-ratio), 0));
+	--fs-m: calc(var(--base) * pow(var(--type-ratio), 1));
+	--fs-l: calc(var(--base) * pow(var(--type-ratio), 2));
+	--fs-xl: calc(var(--base) * pow(var(--type-ratio), 3));
+	--fs-xxl: calc(var(--base) * pow(var(--type-ratio), 4));
 
+	--lh-xs: 1.2;
+	--lh-s: 1.4;
+	--lh-m: 1.6;
+	--lh-l: 1.8;
+	--lh-xl: 2;
+	--lh-xxl: 2.2;
 }

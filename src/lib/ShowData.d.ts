@@ -1,7 +1,7 @@
 type RolePersons = {
 	role: string;
 	persons: string[];
-  isWalkInCover: boolean;
+	isWalkInCover: boolean;
 };
 
 type SingleShow = {

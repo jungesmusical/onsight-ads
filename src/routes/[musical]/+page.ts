@@ -9,6 +9,6 @@ export const load: PageLoad = async ({ fetch, params }) => {
 	const showData: ShowData = await res.json();
 
 	return {
-		showData,
+		showData
 	};
 };
