@@ -23,12 +23,12 @@
 	let { data }: { data: PageData } = $props();
 	const { showData } = data;
 
-	const TEST_DATE = new Date('2025-03-22 20:00:00');
+	const TEST_DATE = new Date('2025-03-22 18:00:01');
 
-	let currentTime = $state(new Date(TEST_DATE));
+	let currentTime = $state(new Date());
 
 	setInterval(() => {
-		currentTime = new Date(TEST_DATE);
+		currentTime = new Date();
 	}, 1000); // update every second
 
 	let nextShowsLive = $derived(getNextShows(showData.shows, currentTime));
@@ -73,16 +73,15 @@
 	{@const walkInCovers = show.cast.roles.filter((role) => role.isWalkInCover)}
 
 	{#if walkInCovers.length > 0}
-		<h2>Walk-In Covers</h2>
+<h3>Kurzfristige Umbesetzung</h3>
 
-		<ul class="dot-list">
-			{#each walkInCovers as role}
-				<li class="dot-list__item">
-					<span class="dot-list__label"><span>{role.role}</span></span>
-					<span class="dot-list__label"><span>{role.persons.join(', ')}</span></span>
-				</li>
-			{/each}
-		</ul>
+		<p>
+      In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
+      {#each walkInCovers as role}
+        <span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von <span class="fw-strong">{role.persons.join(', ')}</span>{#if role !== walkInCovers[walkInCovers.length - 1]},{:else}.{/if}
+      {/each}
+    </p>
+
 	{/if}
 
 	<h2>Ensemble</h2>
@@ -91,7 +90,7 @@
 {/each}
 
 {#if nextShowsLive.length === 0}
-	<p>No shows currently live</p>
+	<p class="ta-center">Aktuell keine aktive Veranstaltung...</p>
 {/if}
 
 <p class="fs-xxs c-fg-3">
