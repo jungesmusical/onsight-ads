@@ -2,7 +2,7 @@ ARG NODE_VERSION=20.18.0-alpine
 ARG OUT_DIR=dist
 ARG PUBLIC_HOMEPAGE_HOST
 
-FROM node:${NODE_VERSION} as build
+FROM node:${NODE_VERSION} AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY ./package*.json ./
 RUN npm ci
 
 COPY . .
-RUN cp ./env.example ./.env
+COPY ./.env.example ./.env
 
 RUN npm run build
 
