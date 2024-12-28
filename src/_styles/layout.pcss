@@ -1,0 +1,16 @@
+body {
+	--main-base-width: 800px;
+
+	background-color: var(--c-bg-1);
+	color: var(--c-fg-1);
+
+	& > * {
+		max-width: var(--main-base-width);
+		margin: 0 auto;
+		padding-inline: var(--m);
+	}
+}
+
+section:not(:last-child) {
+	margin-bottom: var(--xxl);
+}

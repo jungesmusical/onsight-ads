@@ -1,7 +1,7 @@
 ARG NODE_VERSION=20.18.0-alpine
 ARG OUT_DIR=dist
 
-FROM node:${NODE_VERSION} as build
+FROM node:${NODE_VERSION} AS build
 
 WORKDIR /app
 
