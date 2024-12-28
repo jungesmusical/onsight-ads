@@ -10,6 +10,7 @@ COPY ./package*.json ./
 RUN npm ci
 
 COPY . .
+RUN cp ./env.example ./.env
 
 RUN npm run build
 
@@ -24,6 +25,7 @@ COPY --from=build /app/${OUT_DIR} ./${OUT_DIR}
 
 ENV OUT_DIR=${OUT_DIR}
 ENV PUBLIC_HOMEPAGE_HOST=${PUBLIC_HOMEPAGE_HOST}
+ENV NODE_ENV=production
 
 RUN npm ci --omit dev
 
