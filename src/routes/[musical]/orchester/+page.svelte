@@ -21,6 +21,14 @@
 		return nextShows;
 	}
 
+	function getNextShowIterator(shows: SingleShow[], iterator: number): SingleShow | undefined {
+		if (iterator < 0 || iterator >= shows.length) {
+			return undefined;
+		}
+
+		return shows[iterator];
+	}
+
 	let { data }: { data: PageData } = $props();
 	const { showData } = data;
 
@@ -31,7 +39,7 @@
 	let numberOfNextShows = $derived(nextShowsLive.length);
 
 	let showIterator = $state(0);
-	let show = $derived(nextShowsLive[showIterator]);
+	let show = $derived(getNextShowIterator(nextShowsLive, showIterator));
 
 	const MAX_PROGRESS_TIME = 15; // in seconds
 	let progress = $state(0);
@@ -60,30 +68,31 @@
 
 <h1>{showData.common.title}</h1>
 
-<p class="ta-center">
-	<span class="c-prim-fg-1 fw-strong">
-		{new Date(show.timestamp).toLocaleString('de-DE', {
-			dateStyle: 'full',
-			timeStyle: 'short'
-		})}
-	</span><br />
-	{show.companies.join(', ')}
-</p>
-
-<h2>Orchester</h2>
-
-<ul class="dot-list">
-	{#each showData.common.orchestra as role}
-		<li class="dot-list__item">
-			<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
-			<span class="dot-list__label"
-				><span>{role.persons.map((str) => str.replaceAll(' ', ' ')).join(', ')}</span></span
-			>
-		</li>
-	{/each}
-</ul>
-{#if nextShowsLive.length === 0}
+{#if show === undefined}
 	<p class="ta-center">Aktuell keine aktive Veranstaltung...</p>
+{:else}
+	<p class="ta-center">
+		<span class="c-prim-fg-1 fw-strong">
+			{new Date(show.timestamp).toLocaleString('de-DE', {
+				dateStyle: 'full',
+				timeStyle: 'short'
+			})}
+		</span><br />
+		{show.companies.join(', ')}
+	</p>
+
+	<h2>Orchester</h2>
+
+	<ul class="dot-list">
+		{#each showData.common.orchestra as role}
+			<li class="dot-list__item">
+				<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
+				<span class="dot-list__label"
+					><span>{role.persons.map((str) => str.replaceAll(' ', ' ')).join(', ')}</span></span
+				>
+			</li>
+		{/each}
+	</ul>
 {/if}
 
 <p class="fs-xxs c-fg-3">
