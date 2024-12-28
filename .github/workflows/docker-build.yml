@@ -34,7 +34,6 @@ jobs:
           load: true
           build-args: |
             ENV=prod
-            PUBLIC_HOMEPAGE_HOST=https://www.example.com
       -
         name: Test the Docker image
         run: |
