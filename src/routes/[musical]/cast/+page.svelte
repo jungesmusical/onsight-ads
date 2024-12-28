@@ -21,6 +21,14 @@
 		return nextShows;
 	}
 
+	function getNextShowIterator(shows: SingleShow[], iterator: number): SingleShow | undefined {
+		if (iterator < 0 || iterator >= shows.length) {
+			return undefined;
+		}
+
+		return shows[iterator];
+	}
+
 	let { data }: { data: PageData } = $props();
 	const { showData } = data;
 
@@ -31,8 +39,8 @@
 	let numberOfNextShows = $derived(nextShowsLive.length);
 
 	let showIterator = $state(0);
-	let show = $derived(nextShowsLive[showIterator]);
-	let walkInCovers = $derived(show.cast.roles.filter((role) => role.isWalkInCover));
+	let show = $derived(getNextShowIterator(nextShowsLive, showIterator));
+	let walkInCovers = $derived(show?.cast.roles.filter((role) => role.isWalkInCover));
 
 	const MAX_PROGRESS_TIME = 15; // in seconds
 	let progress = $state(0);
@@ -61,57 +69,57 @@
 
 <h1>{showData.common.title}</h1>
 
-<p class="ta-center">
-	<span class="c-prim-fg-1 fw-strong">
-		{new Date(show.timestamp).toLocaleString('de-DE', {
-			dateStyle: 'full',
-			timeStyle: 'short'
-		})}
-	</span><br />
-	{show.companies.join(', ')}
-</p>
-
-<h2>Cast</h2>
-
-<ul class="dot-list">
-	{#each show.cast.roles as role}
-		<li class="dot-list__item">
-			<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
-			<span class="dot-list__label"
-				><span
-					>{role.persons
-						.map((str) => {
-							if (role.isWalkInCover) {
-								str = str + '*';
-							}
-							return str.replace(' ', ' ');
-						})
-						.join(', ')}</span
-				></span
-			>
-		</li>
-	{/each}
-</ul>
-
-{#if walkInCovers.length > 0}
-	<h3>Kurzfristige Umbesetzung</h3>
-
-	<p>
-		In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
-		{#each walkInCovers as role}
-			<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
-			<span class="fw-strong">{role.persons.join(', ')}</span
-			>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
-		{/each}
-	</p>
-{/if}
-
-<h2>Ensemble</h2>
-
-<p>{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
-
-{#if nextShowsLive.length === 0}
+{#if show === undefined}
 	<p class="ta-center">Aktuell keine aktive Veranstaltung...</p>
+{:else}
+	<p class="ta-center">
+		<span class="c-prim-fg-1 fw-strong">
+			{new Date(show.timestamp).toLocaleString('de-DE', {
+				dateStyle: 'full',
+				timeStyle: 'short'
+			})}
+		</span><br />
+		{show?.companies.join(', ')}
+	</p>
+
+	<h2>Cast</h2>
+
+	<ul class="dot-list">
+		{#each show.cast.roles as role}
+			<li class="dot-list__item">
+				<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
+				<span class="dot-list__label"
+					><span
+						>{role.persons
+							.map((str) => {
+								if (role.isWalkInCover) {
+									str = str + '*';
+								}
+								return str.replace(' ', ' ');
+							})
+							.join(', ')}</span
+					></span
+				>
+			</li>
+		{/each}
+	</ul>
+
+	{#if walkInCovers && walkInCovers.length > 0}
+		<h3>Kurzfristige Umbesetzung</h3>
+
+		<p>
+			In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
+			{#each walkInCovers as role}
+				<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
+				<span class="fw-strong">{role.persons.join(', ')}</span
+				>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
+			{/each}
+		</p>
+	{/if}
+
+	<h2>Ensemble</h2>
+
+	<p>{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
 {/if}
 
 <p class="fs-xxs c-fg-3">
