@@ -1,0 +1,149 @@
+:root {
+	/* Sizes: Renard 10 -> 10, 12.5, 16, 20, 25, 31.5, 40
+		========================================================================== */
+
+	--base: 1.5rem; /* Default: 16px */
+	--base-xxs: 0.625;
+	--base-xs: 0.78125;
+	--base-s: 1;
+	--base-m: 1.25;
+	--base-l: 1.5625;
+	--base-xl: 1.96875;
+	--base-xxl: 2.5;
+	--xxs: calc(var(--base) * var(--base-xxs));
+	--xs: calc(var(--base) * var(--base-xs));
+	--s: calc(var(--base) * var(--base-s));
+	--m: calc(var(--base) * var(--base-m));
+	--l: calc(var(--base) * var(--base-l));
+	--xl: calc(var(--base) * var(--base-xl));
+	--xxl: calc(var(--base) * var(--base-xxl));
+
+	/* Color Palette
+    ========================================================================== */
+
+	--color-palette-red-0: #fff5f5;
+	--color-palette-red-10: #ffe3e3;
+	--color-palette-red-20: #ffc9c9;
+	--color-palette-red-30: #ffa8a8;
+	--color-palette-red-40: #ff8787;
+	--color-palette-red-50: #ff6b6b;
+	--color-palette-red-60: #fa5252;
+	--color-palette-red-70: #f03e3e;
+	--color-palette-red-80: #e03131;
+	--color-palette-red-90: #c92a2a;
+
+	--color-palette-green-0: #ebfbee;
+	--color-palette-green-10: #d3f9d8;
+	--color-palette-green-20: #b2f2bb;
+	--color-palette-green-30: #8ce99a;
+	--color-palette-green-40: #69db7c;
+	--color-palette-green-50: #51cf66;
+	--color-palette-green-60: #40c057;
+	--color-palette-green-70: #37b24d;
+	--color-palette-green-80: #2f9e44;
+	--color-palette-green-90: #2b8a3e;
+
+	--color-palette-yellow-0: #fff9db;
+	--color-palette-yellow-10: #fff3bf;
+	--color-palette-yellow-20: #ffec99;
+	--color-palette-yellow-30: #ffe066;
+	--color-palette-yellow-40: #ffd43b;
+	--color-palette-yellow-50: #fcc419;
+	--color-palette-yellow-60: #fab005;
+	--color-palette-yellow-70: #f59f00;
+	--color-palette-yellow-80: #f08c00;
+	--color-palette-yellow-90: #e67700;
+
+	--color-palette-purple-0: #f8f0fc;
+	--color-palette-purple-10: #f3d9fa;
+	--color-palette-purple-20: #eebefa;
+	--color-palette-purple-30: #e599f7;
+	--color-palette-purple-40: #da77f2;
+	--color-palette-purple-50: #cc5de8;
+	--color-palette-purple-60: #be4bdb;
+	--color-palette-purple-70: #ae3ec9;
+	--color-palette-purple-80: #9c36b5;
+	--color-palette-purple-90: #862e9c;
+
+	--color-palette-gray-0: #f5f5f5;
+	--color-palette-gray-10: #eeeeee;
+	--color-palette-gray-20: #e0e0e0;
+	--color-palette-gray-30: #bdbdbd;
+	--color-palette-gray-40: #9e9e9e;
+	--color-palette-gray-50: #757575;
+	--color-palette-gray-60: #616161;
+	--color-palette-gray-70: #424242;
+	--color-palette-gray-80: #212121;
+	--color-palette-gray-90: #121212;
+
+	--color-palette-black-100: #000000;
+	--color-palette-white-0: #ffffff;
+
+	/* Color
+		========================================================================== */
+	/* --c-fg-1: var(--color-palette-gray-90);
+	--c-fg-2: var(--color-palette-gray-80);
+	--c-fg-3: var(--color-palette-gray-70);
+	--c-bg-1: var(--color-palette-white-0);
+	--c-bg-2: var(--color-palette-gray-0);
+	--c-bg-3: var(--color-palette-gray-20);
+	--c-prim-fg-1: var(--color-palette-purple-70);
+	--c-prim-fg-2: var(--color-palette-purple-90);
+	--c-prim-bg-1: var(--color-palette-purple-0);
+	--c-prim-bg-2: var(--color-palette-purple-20);
+	--c-link: var(--color-palette-purple-70);
+	--c-link-interactive: var(--color-palette-purple-90);
+	--c-warn-fg: var(--color-palette-yellow-70);
+	--c-warn-bg: var(--color-palette-yellow-10);
+	--c-error-fg: var(--color-palette-red-70);
+	--c-error-bg: var(--color-palette-red-10); */
+
+	--c-fg-1: var(--color-palette-gray-0);
+	--c-fg-2: var(--color-palette-gray-20);
+	--c-fg-3: var(--color-palette-gray-40);
+	--c-bg-1: var(--color-palette-black-100);
+	--c-bg-2: var(--color-palette-gray-90);
+	--c-bg-3: var(--color-palette-gray-80);
+	--c-prim-fg-1: var(--color-palette-purple-50);
+	--c-prim-fg-2: var(--color-palette-purple-60);
+	--c-prim-bg-1: var(--color-palette-purple-10);
+	--c-prim-bg-2: var(--color-palette-purple-0);
+	--c-link: var(--color-palette-purple-40);
+	--c-link-interactive: var(--color-palette-purple-50);
+	--c-warn-fg: var(--color-palette-yellow-30);
+	--c-warn-bg: var(--color-palette-yellow-90);
+	--c-error-fg: var(--color-palette-red-30);
+	--c-error-bg: var(--color-palette-red-90);
+
+	--c-darken: rgba(var(--color-palette-black-100), 0.05);
+	--c-lighten: rgba(var(--color-palette-white-0), 0.05);
+
+	/* Typography
+		========================================================================== */
+	--ff-serif: 'IBM Plex Serif', 'Georgia', times, serif;
+	--ff-sans: 'IBM Plex Sans', 'Helvetica Neue', arial, sans-serif;
+	--ff-mono: 'SFMono-Regular', consolas, 'Liberation Mono', menlo, courier, monospace;
+
+	--fw-regular: 400; /* Regular */
+	--fw-strong: 600; /* SemiBold */
+
+	--lsp-regular: normal;
+	--lsp-wide: 0.02rem; /* 0.32px */
+
+	--type-ratio: 1.2;
+
+	--fs-xxs: calc(var(--base) * pow(var(--type-ratio), -2));
+	--fs-xs: calc(var(--base) * pow(var(--type-ratio), -1));
+	--fs-s: calc(var(--base) * pow(var(--type-ratio), 0));
+	--fs-m: calc(var(--base) * pow(var(--type-ratio), 1));
+	--fs-l: calc(var(--base) * pow(var(--type-ratio), 2));
+	--fs-xl: calc(var(--base) * pow(var(--type-ratio), 3));
+	--fs-xxl: calc(var(--base) * pow(var(--type-ratio), 4));
+
+	--lh-xs: 1.2;
+	--lh-s: 1.4;
+	--lh-m: 1.6;
+	--lh-l: 1.8;
+	--lh-xl: 2;
+	--lh-xxl: 2.2;
+}
