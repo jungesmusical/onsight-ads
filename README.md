@@ -1,4 +1,4 @@
-# Onsight Ads via Anthias
+# Onsight Ads via TV Module
 
 Web Content displayed on a Raspberry Pi using Anthias for Pre-Show Content.
 
@@ -24,7 +24,3 @@ npm run build
 ```
 
 You can preview the production build with `npm run preview`.
-
-## UI Components
-
-The UI components are based on the [Shadcn](https://ui.shadcn.com/) design system. The components are implemented with <https://www.shadcn-svelte.com>
