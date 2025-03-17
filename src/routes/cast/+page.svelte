@@ -70,22 +70,18 @@
 {#if show === undefined}
 	<p class="ta-center">Aktuell keine aktive Veranstaltung...</p>
 {:else}
-
-  <p class="ta-center">
-    {show?.companies.join(', ')}
-    <br />
-    <span class="c-prim-fg-1 fw-strong">
-      {new Date(show.timestamp).toLocaleString('de-DE', {
-      dateStyle: 'full',
-      timeStyle: 'short'
-    })} Uhr
-    </span>
-</p>
+	<p class="ta-center">
+		{show?.companies.join(', ')}
+		<br />
+		<span class="c-prim-fg-1 fw-strong">
+			{new Date(show.timestamp).toLocaleString('de-DE', {
+				dateStyle: 'full',
+				timeStyle: 'short'
+			})} Uhr
+		</span>
+	</p>
 
 	<h2>Cast</h2>
-
-
-
 
 	<ul class="dot-list">
 		{#each show.cast.roles as role}
@@ -107,25 +103,22 @@
 		{/each}
 	</ul>
 
-
-  {#if walkInCovers && walkInCovers.length > 0}
-  <div class="card">
-    <p>
-			In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
-			{#each walkInCovers as role}
-				<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
-				<span class="fw-strong">{role.persons.join(', ')}</span
-				>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
-			{/each}
-		</p>
-  </div>
+	{#if walkInCovers && walkInCovers.length > 0}
+		<div class="card">
+			<p>
+				In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
+				{#each walkInCovers as role}
+					<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
+					<span class="fw-strong">{role.persons.join(', ')}</span
+					>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
+				{/each}
+			</p>
+		</div>
 	{/if}
 
 	<h2>Ensemble</h2>
 
 	<p>{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
-
-
 {/if}
 
 <p class="fs-xxs c-fg-3">

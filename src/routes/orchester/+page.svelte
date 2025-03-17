@@ -68,16 +68,16 @@
 {#if show === undefined}
 	<p class="ta-center">Aktuell keine aktive Veranstaltung...</p>
 {:else}
-  <p class="ta-center">
-    {show?.companies.join(', ')}
-    <br />
-    <span class="c-prim-fg-1 fw-strong">
-      {new Date(show.timestamp).toLocaleString('de-DE', {
-      dateStyle: 'full',
-      timeStyle: 'short'
-    })} Uhr
-    </span>
-  </p>
+	<p class="ta-center">
+		{show?.companies.join(', ')}
+		<br />
+		<span class="c-prim-fg-1 fw-strong">
+			{new Date(show.timestamp).toLocaleString('de-DE', {
+				dateStyle: 'full',
+				timeStyle: 'short'
+			})} Uhr
+		</span>
+	</p>
 
 	<h2>Orchester</h2>
 
