@@ -18,6 +18,18 @@
 			}
 		});
 
+    if (nextShows.length === 0) {
+      shows.forEach((show) => {
+        // todo: iterate over all shows and find the nearest to current time
+        const start = new Date(show.timestamp);
+        start.setTime(start.getTime() - 1000 * 60 * 60 * 1.5); // 1.5 hours before show start
+
+        if (start > currentDate && nextShows.length === 0) {
+          nextShows.push(show);
+        }
+      });
+    }
+
 		return nextShows;
 	}
 
