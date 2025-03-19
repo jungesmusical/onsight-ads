@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import type { ShowData, SingleShow } from '$lib/ShowData';
-	import { page } from '$app/stores';
 
 	function getNextShows(shows: ShowData['shows'], currentDate = new Date()): SingleShow[] {
 		const nextShows: SingleShow[] = [];
