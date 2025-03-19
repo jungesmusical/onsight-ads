@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import type { ShowData, SingleShow } from '$lib/ShowData';
-	import { page } from '$app/stores';
 
 	function getNextShows(shows: ShowData['shows'], currentDate = new Date()): SingleShow[] {
 		const nextShows: SingleShow[] = [];
@@ -11,7 +10,7 @@
 			start.setTime(start.getTime() - 1000 * 60 * 60 * 1.5); // 1.5 hours before show start
 
 			const end = new Date(show.timestamp);
-			end.setTime(end.getTime() + 1000 * 60 * 60 * 3); // 4 hours after show start
+			end.setTime(end.getTime() + 1000 * 60 * 60 * 3.5); // 3.5 hours after show start
 
 			if (start < currentDate && currentDate < end) {
 				nextShows.push(show);
@@ -44,9 +43,7 @@
 	let { data }: { data: PageData } = $props();
 	const { showData } = data;
 
-	const isDemo = $page.url.searchParams.has('demo');
-
-	let currentTime = $state(new Date(isDemo ? showData.shows[0].timestamp : Date.now()));
+	let currentTime = $state(new Date(Date.now()));
 	let nextShowsLive = $derived(getNextShows(showData.shows, currentTime));
 	let numberOfNextShows = $derived(nextShowsLive.length);
 
@@ -58,7 +55,7 @@
 	let progress = $state(0);
 
 	setInterval(() => {
-		currentTime = new Date(isDemo ? showData.shows[0].timestamp : Date.now());
+		currentTime = new Date(Date.now());
 
 		progress += 0.01;
 		if (progress > MAX_PROGRESS_TIME) {
@@ -91,6 +88,11 @@
 				timeStyle: 'short'
 			})} Uhr
 		</span>
+
+		{#if show?.isPublic === false}
+			<br />
+			Nicht öffentliche Veranstaltung
+		{/if}
 	</p>
 
 	<h2>Cast</h2>
