@@ -5,7 +5,7 @@ type RolePersons = {
 };
 
 type SingleShow = {
-  isPublic: boolean;
+	isPublic: boolean;
 	timestamp: string;
 	ticketUrl: string;
 	companies: string[];

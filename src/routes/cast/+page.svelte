@@ -90,10 +90,10 @@
 			})} Uhr
 		</span>
 
-    {#if show?.isPublic === false}
-      <br />
-      Nicht öffentliche Veranstaltung
-    {/if}
+		{#if show?.isPublic === false}
+			<br />
+			Nicht öffentliche Veranstaltung
+		{/if}
 	</p>
 
 	<h2>Cast</h2>
