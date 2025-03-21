@@ -88,8 +88,15 @@
 				dateStyle: 'full',
 				timeStyle: 'short'
 			})} Uhr
-		</span>
+		</span>+
+
+    {#if show?.isPublic === false}
+    <br />
+    Nicht öffentliche Veranstaltung
+  {/if}
+
 	</p>
+
 
 	<h2>Orchester</h2>
 
