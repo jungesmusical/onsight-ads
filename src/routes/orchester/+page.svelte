@@ -88,7 +88,7 @@
 				dateStyle: 'full',
 				timeStyle: 'short'
 			})} Uhr
-		</span>+
+		</span>
 
 		{#if show?.isPublic === false}
 			<br />
