@@ -90,20 +90,19 @@
 			})} Uhr
 		</span>+
 
-    {#if show?.isPublic === false}
-    <br />
-    Nicht öffentliche Veranstaltung
-  {/if}
-
+		{#if show?.isPublic === false}
+			<br />
+			Nicht öffentliche Veranstaltung
+		{/if}
 	</p>
-
 
 	<h2>Orchester</h2>
 
-
-  {#if show?.conductor}
-  Die Show wird dirigiert von {show?.conductor.replaceAll(' ', ' ')}.
-  {/if}
+	{#if show?.conductor}
+		<p class="ta-center">
+			Die Show wird dirigiert von {show?.conductor.replaceAll(' ', ' ')}.
+		</p>
+	{/if}
 
 	<ul class="dot-list">
 		{#each showData.common.orchestra as role}

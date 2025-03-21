@@ -13,7 +13,7 @@ type SingleShow = {
 		ensemble: string[];
 		roles: RolePersons[];
 	};
-  conductor: string;
+	conductor: string;
 };
 
 type ShowData = {
@@ -29,7 +29,7 @@ type ShowData = {
 		};
 		orchestra: RolePersons[];
 		creativeTeam: (RolePersons & { lead: boolean })[];
-    foh: RolePersons[];
+		foh: RolePersons[];
 	};
 	shows: SingleShow[];
 };
