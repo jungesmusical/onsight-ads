@@ -88,10 +88,21 @@
 				dateStyle: 'full',
 				timeStyle: 'short'
 			})} Uhr
-		</span>
+		</span>+
+
+		{#if show?.isPublic === false}
+			<br />
+			Nicht öffentliche Veranstaltung
+		{/if}
 	</p>
 
 	<h2>Orchester</h2>
+
+	{#if show?.conductor}
+		<p class="ta-center">
+			Die Show wird dirigiert von {show?.conductor.replaceAll(' ', ' ')}.
+		</p>
+	{/if}
 
 	<ul class="dot-list">
 		{#each showData.common.orchestra as role}

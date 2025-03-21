@@ -20,5 +20,6 @@
 		max-width: none;
 		aspect-ratio: 21 / 9;
 		border-radius: var(--m);
+		overflow: hidden;
 	}
 </style>
