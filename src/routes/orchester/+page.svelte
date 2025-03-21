@@ -100,6 +100,11 @@
 
 	<h2>Orchester</h2>
 
+
+  {#if show?.conductor}
+  Die Show wird dirigiert von {show?.conductor.replaceAll(' ', ' ')}.
+  {/if}
+
 	<ul class="dot-list">
 		{#each showData.common.orchestra as role}
 			<li class="dot-list__item">
