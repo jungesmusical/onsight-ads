@@ -30,6 +30,7 @@ type ShowData = {
 		orchestra: RolePersons[];
 		creativeTeam: (RolePersons & { lead: boolean })[];
 		foh: RolePersons[];
+		disclaimer: string?;
 	};
 	shows: SingleShow[];
 };
