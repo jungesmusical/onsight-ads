@@ -134,10 +134,3 @@
 
 	<p>{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
 {/if}
-
-<p class="fs-xxs c-fg-3">
-	{new Date(currentTime).toLocaleString('en-GB', {
-		dateStyle: 'short',
-		timeStyle: 'long'
-	})} – Cast & Ensemble
-</p>

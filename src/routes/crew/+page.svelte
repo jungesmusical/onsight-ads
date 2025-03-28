@@ -3,20 +3,6 @@
 
 	let { data }: { data: PageData } = $props();
 	const { showData } = data;
-
-	let currentTime = $state(new Date());
-
-	const MAX_PROGRESS_TIME = 15; // in seconds
-	let progress = $state(0);
-
-	setInterval(() => {
-		currentTime = new Date();
-
-		progress += 0.01;
-		if (progress > MAX_PROGRESS_TIME) {
-			progress = 0;
-		}
-	}, 10); // 100 times per second
 </script>
 
 <h2>Crew</h2>
@@ -46,10 +32,3 @@
 		{/each}
 	</ul>
 {/if}
-
-<p class="fs-xxs c-fg-3">
-	{new Date(currentTime).toLocaleString('en-GB', {
-		dateStyle: 'short',
-		timeStyle: 'long'
-	})} – Crew
-</p>
