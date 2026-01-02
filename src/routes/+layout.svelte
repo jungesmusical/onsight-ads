@@ -2,16 +2,18 @@
 	import '../app.pcss';
 </script>
 
-<video autoplay loop muted playsinline poster="/artwork-poster.jpg" class="artwork-video">
+<!-- <video autoplay loop muted playsinline poster="/artwork-poster.jpg" class="artwork">
 	<source src="/artwork.mp4" type="video/mp4" />
-</video>
+</video> -->
+
+<img src="/artwork-poster.jpg" alt="Artwork" class="artwork" />
 
 <main>
 	<slot></slot>
 </main>
 
 <style>
-	.artwork-video {
+	.artwork {
 		margin: var(--m);
 		padding: 0;
 		object-fit: cover;
