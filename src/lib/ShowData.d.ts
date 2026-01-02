@@ -31,6 +31,16 @@ type ShowData = {
 		creativeTeam: (RolePersons & { lead: boolean })[];
 		foh: RolePersons[];
 		disclaimer: string?;
+    media: {
+      image: {
+        source: Array<{ srcset: string; type: string; }>;
+        img: { src: string; srcset: string; alt: string; };
+      } | null;
+      video: {
+        source: Array<{ srcset: string; type: string; }>;
+        video: { poster: string | null; };
+      } | null;
+    };
 	};
 	shows: SingleShow[];
 };
