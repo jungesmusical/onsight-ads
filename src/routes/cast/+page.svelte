@@ -132,5 +132,5 @@
 
 	<h2>Ensemble</h2>
 
-	<p>{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
+	<p class="no-hyphens ta-center">{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
 {/if}
