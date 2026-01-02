@@ -41,8 +41,9 @@
 		return shows[iterator];
 	}
 
-	let { data }: { data: PageData } = $props();
-	const { showData } = data;
+  const { data } = $props<{ data: PageData; }>();
+	const showData = $derived(data.showData);
+
 	const isDemo = $page.url.searchParams.has('demo');
 
 	let currentTime = $state(new Date(isDemo ? showData.shows[0].timestamp : Date.now()));

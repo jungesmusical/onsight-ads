@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	let { data }: { data: PageData } = $props();
-	const { showData } = data;
+  const { data } = $props<{ data: PageData; }>();
+	const showData = $derived(data.showData);
 </script>
 
 <h2>Hinweis</h2>

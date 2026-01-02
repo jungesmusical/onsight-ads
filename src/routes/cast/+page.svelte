@@ -40,8 +40,8 @@
 		return shows[iterator];
 	}
 
-	let { data }: { data: PageData } = $props();
-	const { showData } = data;
+  const { data } = $props<{ data: PageData; }>();
+	const showData = $derived(data.showData);
 
 	let currentTime = $state(new Date(Date.now()));
 	let nextShowsLive = $derived(getNextShows(showData.shows, currentTime));

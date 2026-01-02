@@ -37,7 +37,7 @@ type ShowData = {
 				img: { src: string; srcset: string; alt: string };
 			} | null;
 			video: {
-				source: Array<{ srcset: string; type: string }>;
+				source: Array<{ src: string; type: string }>;
 				video: { poster: string | null };
 			} | null;
 		};

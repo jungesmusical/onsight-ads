@@ -1,8 +1,10 @@
 <script lang="ts">
 	import '../app.pcss';
+	import type { Snippet } from 'svelte';
+	import type { PageData } from './$types';
 
-	let { data }: { data: PageData } = $props();
-	const { showData } = data;
+	const { data, children } = $props<{ data: PageData; children: Snippet }>();
+	const showData = $derived(data.showData);
 </script>
 
 {#if showData?.common?.media?.video}
@@ -33,7 +35,7 @@
 {/if}
 
 <main>
-	<slot></slot>
+	{@render children()}
 </main>
 
 <style>
