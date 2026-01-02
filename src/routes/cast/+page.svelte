@@ -40,7 +40,7 @@
 		return shows[iterator];
 	}
 
-  const { data } = $props<{ data: PageData; }>();
+	const { data } = $props<{ data: PageData }>();
 	const showData = $derived(data.showData);
 
 	let currentTime = $state(new Date(Date.now()));
@@ -132,5 +132,7 @@
 
 	<h2>Ensemble</h2>
 
-	<p class="no-hyphens ta-center">{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}</p>
+	<p class="no-hyphens ta-center">
+		{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}
+	</p>
 {/if}

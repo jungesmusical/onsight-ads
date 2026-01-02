@@ -39,9 +39,9 @@
 </main>
 
 <style>
-  picture {
-    display: contents;
-  }
+	picture {
+		display: contents;
+	}
 	.artwork {
 		margin: var(--m);
 		padding: 0;

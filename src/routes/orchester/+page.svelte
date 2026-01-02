@@ -41,12 +41,17 @@
 		return shows[iterator];
 	}
 
-  const { data } = $props<{ data: PageData; }>();
+	const { data } = $props<{ data: PageData }>();
 	const showData = $derived(data.showData);
 
 	const isDemo = $page.url.searchParams.has('demo');
 
-	let currentTime = $state(new Date(isDemo ? showData.shows[0].timestamp : Date.now()));
+	let currentTime = $state(
+		(() => {
+			const timestamp = isDemo ? showData.shows[0].timestamp : Date.now();
+			return new Date(timestamp);
+		})()
+	);
 	let nextShowsLive = $derived(getNextShows(showData.shows, currentTime));
 	let numberOfNextShows = $derived(nextShowsLive.length);
 
@@ -110,7 +115,8 @@
 			<li class="dot-list__item">
 				<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
 				<span class="dot-list__label"
-					><span>{role.persons.map((str) => str.replaceAll(' ', ' ')).join(', ')}</span></span
+					><span>{role.persons.map((str: string) => str.replaceAll(' ', ' ')).join(', ')}</span
+					></span
 				>
 			</li>
 		{/each}

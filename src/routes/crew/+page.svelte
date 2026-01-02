@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-  const { data } = $props<{ data: PageData; }>();
+	const { data } = $props<{ data: PageData }>();
 	const showData = $derived(data.showData);
 </script>
 
@@ -12,7 +12,7 @@
 		<li class="dot-list__item">
 			<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
 			<span class="dot-list__label"
-				><span>{role.persons.map((str) => str.replaceAll(' ', ' ')).join(', ')}</span></span
+				><span>{role.persons.map((str: string) => str.replaceAll(' ', ' ')).join(', ')}</span></span
 			>
 		</li>
 	{/each}
@@ -26,7 +26,8 @@
 			<li class="dot-list__item">
 				<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
 				<span class="dot-list__label"
-					><span>{role.persons.map((str) => str.replaceAll(' ', ' ')).join(', ')}</span></span
+					><span>{role.persons.map((str: string) => str.replaceAll(' ', ' ')).join(', ')}</span
+					></span
 				>
 			</li>
 		{/each}
