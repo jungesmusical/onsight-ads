@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import type { PageData } from './$types';
+	import type { LayoutData } from './$types';
 
-	const { data, children } = $props<{ data: PageData; children: Snippet }>();
+	const { data, children } = $props<{ data: LayoutData; children: Snippet }>();
 	const showData = $derived(data.showData);
 </script>
 

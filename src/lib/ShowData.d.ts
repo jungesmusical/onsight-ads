@@ -45,7 +45,7 @@ type ShowData = {
 		};
 		gallery: Array<{
 			title: string;
-      subtitle?: string;
+			subtitle?: string;
 			year: string;
 			images: SourceImage[];
 		}>;

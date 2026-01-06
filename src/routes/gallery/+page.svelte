@@ -3,15 +3,15 @@
 
 	const { data } = $props<{ data: PageData }>();
 	const showData = $derived(data.showData);
-
-	const gallery = $derived(showData.common.gallery[0]);
+  const numItem = $derived(data.numItem);
+  const gallery = $derived(showData.common.gallery[numItem]);
 </script>
 
 <header class="gallery-heading">
 	<h1>{gallery.title} <span>({gallery.year})</span></h1>
-  {#if gallery.subtitle}
-    <p>{gallery.subtitle}</p>
-  {/if}
+	{#if gallery.subtitle}
+		<p>{gallery.subtitle}</p>
+	{/if}
 </header>
 
 <div class="gallery-grid">
@@ -158,7 +158,7 @@
 
 	.gallery-heading {
 		--margin-overlap: 6rem;
-    --padding-inner: 8rem;
+		--padding-inner: 8rem;
 
 		position: absolute;
 		bottom: 0;
