@@ -8,7 +8,10 @@
 </script>
 
 <header class="gallery-heading">
-	<h1>{gallery.title} <span>{gallery.year}</span></h1>
+	<h1>{gallery.title} <span>({gallery.year})</span></h1>
+  {#if gallery.subtitle}
+    <p>{gallery.subtitle}</p>
+  {/if}
 </header>
 
 <div class="gallery-grid">
@@ -155,11 +158,13 @@
 
 	.gallery-heading {
 		--margin-overlap: 6rem;
+    --padding-inner: 8rem;
+
 		position: absolute;
 		bottom: 0;
 		left: 0;
 		right: 0;
-		padding: var(--xxl);
+		padding: var(--padding-inner);
 		padding-top: calc(var(--xxl) + var(--margin-overlap));
 		color: white;
 		z-index: 1;
@@ -175,10 +180,9 @@
 			text-align: start;
 			margin: 0;
 			line-height: 1;
+
 			span {
 				font-weight: var(--fw-regular);
-				display: inline-block;
-				margin-inline-start: 0.5ch;
 			}
 		}
 	}
