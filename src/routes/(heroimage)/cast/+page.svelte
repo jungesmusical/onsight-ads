@@ -101,7 +101,7 @@
 		{#each show.cast.roles as role}
 			<li class="dot-list__item">
 				<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
-				<span class="dot-list__label"
+				<span class="dot-list__label no-hyphens"
 					><span
 						>{role.persons
 							.map((str) => {
