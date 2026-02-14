@@ -12,7 +12,6 @@
 	main {
 		max-width: none;
 		padding: 0;
-		aspect-ratio: 9 / 16;
 		max-height: 100vh;
 		overflow: hidden;
 	}

@@ -5,6 +5,7 @@
 	const showData = $derived(data.showData);
   const numItem = $derived(data.numItem);
   const gallery = $derived(showData.common.gallery[numItem]);
+	const limitedImages = $derived(gallery.images.slice(0, 7));
 </script>
 
 <header class="gallery-heading">
@@ -15,7 +16,7 @@
 </header>
 
 <div class="gallery-grid">
-	{#each gallery.images as image}
+	{#each limitedImages as image}
 		<div class="gallery-grid__item">
 			<picture>
 				{#each image.source as source}
@@ -37,16 +38,25 @@
 		display: contents;
 	}
 	.gallery-grid {
+    --numOfRows: 6;
+    --numOfCols: 3;
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
-		grid-template-rows: repeat(6, minmax(0, 1fr));
+		grid-template-columns: repeat(var(--numOfCols), minmax(0, 1fr));
+		grid-template-rows: repeat(var(--numOfRows), minmax(0, 1fr));
 		gap: var(--xxs);
 		padding: var(--xxs);
 		height: calc(100vh - 2 * var(--xxs));
 		position: relative;
 
-		&:has(> :nth-child(10)):not(:has(> :nth-child(11))) {
-			grid-template-rows: repeat(5, minmax(0, 1fr));
+    @mixin numberOfItems($n) {
+      &:has(> :nth-child(#{$n})):not(:has(> :nth-child(#{$n + 1}))) {
+        @content;
+      }
+    }
+
+    @include numberOfItems(10) {
+      --numOfRows: 5;
+      --numOfCols: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
@@ -54,10 +64,21 @@
 				'gallery_item_5 gallery_item_5 gallery_item_6'
 				'gallery_item_7 gallery_item_8 gallery_item_8'
 				'gallery_item_9 gallery_item_9 gallery_item_10';
-		}
 
-		&:has(> :nth-child(9)):not(:has(> :nth-child(10))) {
-			grid-template-rows: repeat(5, minmax(0, 1fr));
+      @media (orientation: landscape) {
+        --numOfRows: 3;
+        --numOfCols: 5;
+
+        grid-template-areas:
+          'gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_2 gallery_item_3'
+          'gallery_item_4 gallery_item_5 gallery_item_5 gallery_item_6 gallery_item_6'
+          'gallery_item_7 gallery_item_8 gallery_item_9 gallery_item_9 gallery_item_10'
+      }
+    }
+
+    @include numberOfItems(9) {
+      --numOfRows: 5;
+      --numOfCols: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
@@ -67,7 +88,10 @@
 				'gallery_item_9 gallery_item_9 gallery_item_9';
 		}
 
-		&:has(> :nth-child(8)):not(:has(> :nth-child(9))) {
+    @include numberOfItems(8) {
+      --numOfRows: 6;
+      --numOfCols: 3;
+
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
 				'gallery_item_3 gallery_item_3 gallery_item_2'
@@ -77,8 +101,10 @@
 				'gallery_item_7 gallery_item_7 gallery_item_8';
 		}
 
-		&:has(> :nth-child(7)):not(:has(> :nth-child(8))) {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
+    @include numberOfItems(7) {
+      --numOfRows: 6;
+      --numOfCols: 4;
+
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_2'
 				'gallery_item_3 gallery_item_3 gallery_item_2 gallery_item_2'
@@ -88,55 +114,99 @@
 				'gallery_item_6 gallery_item_6 gallery_item_7 gallery_item_7';
 		}
 
-		&:has(> :nth-child(6)):not(:has(> :nth-child(7))) {
-			grid-template-rows: repeat(3, minmax(0, 1fr));
+		@include numberOfItems(6) {
+      --numOfRows: 3;
+      --numOfCols: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
 				'gallery_item_3 gallery_item_4 gallery_item_4'
 				'gallery_item_5 gallery_item_5 gallery_item_6';
+
+      @media (orientation: landscape) {
+        --numOfRows: 2;
+        --numOfCols: 6;
+
+        grid-template-areas:
+          'gallery_item_1 gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_3 gallery_item_3'
+          'gallery_item_4 gallery_item_4 gallery_item_5 gallery_item_5 gallery_item_5 gallery_item_6';
+      }
 		}
 
-		&:has(> :nth-child(5)):not(:has(> :nth-child(6))) {
-			grid-template-rows: repeat(3, minmax(0, 1fr));
+		@include numberOfItems(5) {
+      --numOfCols: 3;
+      --numOfRows: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_1'
 				'gallery_item_2 gallery_item_3 gallery_item_3'
 				'gallery_item_4 gallery_item_4 gallery_item_5';
+
+      @media (orientation: landscape) {
+        --numOfCols: 3;
+        --numOfRows: 2;
+
+        grid-template-areas:
+          'gallery_item_1 gallery_item_2 gallery_item_3'
+          'gallery_item_4 gallery_item_4 gallery_item_5';
+      }
 		}
 
-		&:has(> :nth-child(4)):not(:has(> :nth-child(5))) {
-			grid-template-rows: repeat(3, minmax(0, 1fr));
+		@include numberOfItems(4) {
+      --numOfCols: 3;
+      --numOfRows: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_1'
 				'gallery_item_2 gallery_item_3 gallery_item_3'
 				'gallery_item_4 gallery_item_4 gallery_item_4';
+
+      @media (orientation: landscape) {
+        --numOfCols: 3;
+        --numOfRows: 2;
+
+        grid-template-areas:
+          'gallery_item_1 gallery_item_1 gallery_item_2'
+          'gallery_item_3 gallery_item_4 gallery_item_4';
+      }
 		}
 
-		&:has(> :nth-child(3)):not(:has(> :nth-child(4))) {
-			grid-template-rows: repeat(3, minmax(0, 1fr));
-			grid-template-columns: minmax(0, 1fr);
+		@include numberOfItems(3) {
+      --numOfCols: 1;
+      --numOfRows: 3;
 
 			grid-template-areas:
 				'gallery_item_1'
 				'gallery_item_2'
 				'gallery_item_3';
+
+      @media (orientation: landscape) {
+        --numOfCols: 3;
+        --numOfRows: 1;
+
+        grid-template-areas: 'gallery_item_1 gallery_item_2 gallery_item_3';
+      }
 		}
 
-		&:has(> :nth-child(2)):not(:has(> :nth-child(3))) {
-			grid-template-rows: repeat(2, minmax(0, 1fr));
-			grid-template-columns: minmax(0, 1fr);
+		@include numberOfItems(2) {
+      --numOfCols: 1;
+      --numOfRows: 2;
 
 			grid-template-areas:
 				'gallery_item_1'
 				'gallery_item_2';
+
+      @media (orientation: landscape) {
+        --numOfCols: 2;
+        --numOfRows: 1;
+
+        grid-template-areas: 'gallery_item_1 gallery_item_2';
+      }
 		}
 
-		&:has(> :nth-child(1)):not(:has(> :nth-child(2))) {
-			grid-template-rows: minmax(0, 1fr);
-			grid-template-columns: minmax(0, 1fr);
+		@include numberOfItems(1) {
+      --numOfCols: 1;
+      --numOfRows: 1;
 
 			grid-template-areas: 'gallery_item_1';
 		}
