@@ -18,7 +18,7 @@ type SingleShow = {
 		ensemble: string[];
 		roles: RolePersons[];
 	};
-	conductor: string;
+	conductor: string | null;
 };
 
 type ShowData = {

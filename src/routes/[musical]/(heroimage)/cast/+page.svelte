@@ -95,44 +95,48 @@
 		{/if}
 	</p>
 
-	<h2>Cast</h2>
+	{#if show.cast.roles.length > 0}
+		<h2>Cast</h2>
 
-	<ul class="dot-list">
-		{#each show.cast.roles as role}
-			<li class="dot-list__item">
-				<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
-				<span class="dot-list__label no-hyphens"
-					><span
-						>{role.persons
-							.map((str) => {
-								if (role.isWalkInCover) {
-									str = str + '*';
-								}
-								return str.replace(' ', ' ');
-							})
-							.join(', ')}</span
-					></span
-				>
-			</li>
-		{/each}
-	</ul>
+		<ul class="dot-list">
+			{#each show.cast.roles as role}
+				<li class="dot-list__item">
+					<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
+					<span class="dot-list__label no-hyphens"
+						><span
+							>{role.persons
+								.map((str) => {
+									if (role.isWalkInCover) {
+										str = str + '*';
+									}
+									return str.replace(' ', ' ');
+								})
+								.join(', ')}</span
+						></span
+					>
+				</li>
+			{/each}
+		</ul>
 
-	{#if walkInCovers && walkInCovers.length > 0}
-		<div class="card">
-			<p>
-				In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
-				{#each walkInCovers as role}
-					<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
-					<span class="fw-strong">{role.persons.join(', ')}</span
-					>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
-				{/each}
-			</p>
-		</div>
+		{#if walkInCovers && walkInCovers.length > 0}
+			<div class="card">
+				<p>
+					In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
+					{#each walkInCovers as role}
+						<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
+						<span class="fw-strong">{role.persons.join(', ')}</span
+						>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
+					{/each}
+				</p>
+			</div>
+		{/if}
 	{/if}
 
-	<h2>Ensemble</h2>
+	{#if show.cast.ensemble.length > 0}
+		<h2>Ensemble</h2>
 
-	<p class="no-hyphens ta-center">
-		{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}
-	</p>
+		<p class="no-hyphens ta-center">
+			{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}
+		</p>
+	{/if}
 {/if}
