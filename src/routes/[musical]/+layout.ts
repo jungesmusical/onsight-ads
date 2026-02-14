@@ -16,7 +16,8 @@ export const load: LayoutLoad = async ({ fetch, params }) => {
 		const showData: ShowData = await res.json();
 
 		return {
-			showData
+			showData,
+			musicalSlug: params.musical,
 		};
 	} catch {
 		error(404, 'Nothing found for ' + params.musical);
