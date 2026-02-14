@@ -3,8 +3,8 @@
 
 	const { data } = $props<{ data: PageData }>();
 	const showData = $derived(data.showData);
-  const numItem = $derived(data.numItem);
-  const gallery = $derived(showData.common.gallery[numItem]);
+	const numItem = $derived(data.numItem);
+	const gallery = $derived(showData.common.gallery[numItem]);
 	const limitedImages = $derived(gallery.images.slice(0, 7));
 </script>
 
@@ -38,8 +38,8 @@
 		display: contents;
 	}
 	.gallery-grid {
-    --numOfRows: 6;
-    --numOfCols: 3;
+		--numOfRows: 6;
+		--numOfCols: 3;
 		display: grid;
 		grid-template-columns: repeat(var(--numOfCols), minmax(0, 1fr));
 		grid-template-rows: repeat(var(--numOfRows), minmax(0, 1fr));
@@ -48,15 +48,15 @@
 		height: calc(100vh - 2 * var(--xxs));
 		position: relative;
 
-    @mixin numberOfItems($n) {
-      &:has(> :nth-child(#{$n})):not(:has(> :nth-child(#{$n + 1}))) {
-        @content;
-      }
-    }
+		@mixin numberOfItems($n) {
+			&:has(> :nth-child(#{$n})):not(:has(> :nth-child(#{$n + 1}))) {
+				@content;
+			}
+		}
 
-    @include numberOfItems(10) {
-      --numOfRows: 5;
-      --numOfCols: 3;
+		@include numberOfItems(10) {
+			--numOfRows: 5;
+			--numOfCols: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
@@ -65,20 +65,20 @@
 				'gallery_item_7 gallery_item_8 gallery_item_8'
 				'gallery_item_9 gallery_item_9 gallery_item_10';
 
-      @media (orientation: landscape) {
-        --numOfRows: 3;
-        --numOfCols: 5;
+			@media (orientation: landscape) {
+				--numOfRows: 3;
+				--numOfCols: 5;
 
-        grid-template-areas:
-          'gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_2 gallery_item_3'
-          'gallery_item_4 gallery_item_5 gallery_item_5 gallery_item_6 gallery_item_6'
-          'gallery_item_7 gallery_item_8 gallery_item_9 gallery_item_9 gallery_item_10'
-      }
-    }
+				grid-template-areas:
+					'gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_2 gallery_item_3'
+					'gallery_item_4 gallery_item_5 gallery_item_5 gallery_item_6 gallery_item_6'
+					'gallery_item_7 gallery_item_8 gallery_item_9 gallery_item_9 gallery_item_10';
+			}
+		}
 
-    @include numberOfItems(9) {
-      --numOfRows: 5;
-      --numOfCols: 3;
+		@include numberOfItems(9) {
+			--numOfRows: 5;
+			--numOfCols: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
@@ -88,9 +88,9 @@
 				'gallery_item_9 gallery_item_9 gallery_item_9';
 		}
 
-    @include numberOfItems(8) {
-      --numOfRows: 6;
-      --numOfCols: 3;
+		@include numberOfItems(8) {
+			--numOfRows: 6;
+			--numOfCols: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
@@ -101,9 +101,9 @@
 				'gallery_item_7 gallery_item_7 gallery_item_8';
 		}
 
-    @include numberOfItems(7) {
-      --numOfRows: 6;
-      --numOfCols: 4;
+		@include numberOfItems(7) {
+			--numOfRows: 6;
+			--numOfCols: 4;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_2'
@@ -115,98 +115,98 @@
 		}
 
 		@include numberOfItems(6) {
-      --numOfRows: 3;
-      --numOfCols: 3;
+			--numOfRows: 3;
+			--numOfCols: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_2'
 				'gallery_item_3 gallery_item_4 gallery_item_4'
 				'gallery_item_5 gallery_item_5 gallery_item_6';
 
-      @media (orientation: landscape) {
-        --numOfRows: 2;
-        --numOfCols: 6;
+			@media (orientation: landscape) {
+				--numOfRows: 2;
+				--numOfCols: 6;
 
-        grid-template-areas:
-          'gallery_item_1 gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_3 gallery_item_3'
-          'gallery_item_4 gallery_item_4 gallery_item_5 gallery_item_5 gallery_item_5 gallery_item_6';
-      }
+				grid-template-areas:
+					'gallery_item_1 gallery_item_1 gallery_item_1 gallery_item_2 gallery_item_3 gallery_item_3'
+					'gallery_item_4 gallery_item_4 gallery_item_5 gallery_item_5 gallery_item_5 gallery_item_6';
+			}
 		}
 
 		@include numberOfItems(5) {
-      --numOfCols: 3;
-      --numOfRows: 3;
+			--numOfCols: 3;
+			--numOfRows: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_1'
 				'gallery_item_2 gallery_item_3 gallery_item_3'
 				'gallery_item_4 gallery_item_4 gallery_item_5';
 
-      @media (orientation: landscape) {
-        --numOfCols: 3;
-        --numOfRows: 2;
+			@media (orientation: landscape) {
+				--numOfCols: 3;
+				--numOfRows: 2;
 
-        grid-template-areas:
-          'gallery_item_1 gallery_item_2 gallery_item_3'
-          'gallery_item_4 gallery_item_4 gallery_item_5';
-      }
+				grid-template-areas:
+					'gallery_item_1 gallery_item_2 gallery_item_3'
+					'gallery_item_4 gallery_item_4 gallery_item_5';
+			}
 		}
 
 		@include numberOfItems(4) {
-      --numOfCols: 3;
-      --numOfRows: 3;
+			--numOfCols: 3;
+			--numOfRows: 3;
 
 			grid-template-areas:
 				'gallery_item_1 gallery_item_1 gallery_item_1'
 				'gallery_item_2 gallery_item_3 gallery_item_3'
 				'gallery_item_4 gallery_item_4 gallery_item_4';
 
-      @media (orientation: landscape) {
-        --numOfCols: 3;
-        --numOfRows: 2;
+			@media (orientation: landscape) {
+				--numOfCols: 3;
+				--numOfRows: 2;
 
-        grid-template-areas:
-          'gallery_item_1 gallery_item_1 gallery_item_2'
-          'gallery_item_3 gallery_item_4 gallery_item_4';
-      }
+				grid-template-areas:
+					'gallery_item_1 gallery_item_1 gallery_item_2'
+					'gallery_item_3 gallery_item_4 gallery_item_4';
+			}
 		}
 
 		@include numberOfItems(3) {
-      --numOfCols: 1;
-      --numOfRows: 3;
+			--numOfCols: 1;
+			--numOfRows: 3;
 
 			grid-template-areas:
 				'gallery_item_1'
 				'gallery_item_2'
 				'gallery_item_3';
 
-      @media (orientation: landscape) {
-        --numOfCols: 3;
-        --numOfRows: 1;
+			@media (orientation: landscape) {
+				--numOfCols: 3;
+				--numOfRows: 1;
 
-        grid-template-areas: 'gallery_item_1 gallery_item_2 gallery_item_3';
-      }
+				grid-template-areas: 'gallery_item_1 gallery_item_2 gallery_item_3';
+			}
 		}
 
 		@include numberOfItems(2) {
-      --numOfCols: 1;
-      --numOfRows: 2;
+			--numOfCols: 1;
+			--numOfRows: 2;
 
 			grid-template-areas:
 				'gallery_item_1'
 				'gallery_item_2';
 
-      @media (orientation: landscape) {
-        --numOfCols: 2;
-        --numOfRows: 1;
+			@media (orientation: landscape) {
+				--numOfCols: 2;
+				--numOfRows: 1;
 
-        grid-template-areas: 'gallery_item_1 gallery_item_2';
-      }
+				grid-template-areas: 'gallery_item_1 gallery_item_2';
+			}
 		}
 
 		@include numberOfItems(1) {
-      --numOfCols: 1;
-      --numOfRows: 1;
+			--numOfCols: 1;
+			--numOfRows: 1;
 
 			grid-template-areas: 'gallery_item_1';
 		}
