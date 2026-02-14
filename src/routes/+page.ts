@@ -16,7 +16,7 @@ export const load: PageLoad = async ({ fetch }) => {
 		const productionsData: ProductionsData = await res.json();
 
 		return {
-			productionsData,
+			productionsData
 		};
 	} catch {
 		error(500, 'Failed to fetch data from server');

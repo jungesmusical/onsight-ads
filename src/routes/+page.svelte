@@ -1,16 +1,16 @@
 <script lang="ts">
-  import type { PageData } from './$types';
+	import type { PageData } from './$types';
 
-  const { data } = $props<{ data: PageData }>();
+	const { data } = $props<{ data: PageData }>();
 </script>
 
 <main>
 	<h1>OnSight Ads</h1>
 
 	<ul aria-label="Erreichbare Produktionen">
-    {#each data.productionsData.productions as production}
-      <li><a href="/{production.slug}">{production.title}</a></li>
-    {/each}
+		{#each data.productionsData.productions as production}
+			<li><a href="/{production.slug}">{production.title}</a></li>
+		{/each}
 	</ul>
 </main>
 
