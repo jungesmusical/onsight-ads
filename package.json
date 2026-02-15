@@ -4,7 +4,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build --mode preview",
+		"build": "vite build",
+		"build:preview": "vite build --mode preview",
 		"preview": "node dist/index.js",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
