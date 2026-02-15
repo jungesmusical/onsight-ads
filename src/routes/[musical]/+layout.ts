@@ -20,7 +20,8 @@ export const load: LayoutLoad = async ({ fetch, params }) => {
 		};
 	} catch (e) {
 		// If we already threw an error() above, it will be caught here and re-thrown
-		if (e && typeof e === 'object' && 'status' in e) {
+		// SvelteKit errors have both 'status' and 'body' properties
+		if (e && typeof e === 'object' && 'status' in e && 'body' in e) {
 			throw e;
 		}
 		// For other errors (network, parsing, etc.), return 500
