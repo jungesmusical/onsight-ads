@@ -10,7 +10,7 @@ export const load: PageLoad = async ({ fetch }) => {
 		const res = await fetch(url);
 
 		if (!res.ok) {
-			throw new Error();
+			error(res.status, 'Failed to fetch data from server');
 		}
 
 		const productionsData: ProductionsData = await res.json();
@@ -18,7 +18,12 @@ export const load: PageLoad = async ({ fetch }) => {
 		return {
 			productionsData
 		};
-	} catch {
+	} catch (e) {
+		// If we already threw an error() above, it will be caught here and re-thrown
+		if (e && typeof e === 'object' && 'status' in e) {
+			throw e;
+		}
+		// For other errors (network, parsing, etc.), return 500
 		error(500, 'Failed to fetch data from server');
 	}
 };
