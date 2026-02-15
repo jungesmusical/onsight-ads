@@ -5,7 +5,7 @@
 	const showData = $derived(data.showData);
 	const numItem = $derived(data.numItem);
 	const gallery = $derived(showData.common.gallery[numItem]);
-	const limitedImages = $derived(gallery.images.slice(0, 7));
+	const limitedImages = $derived(gallery.images.slice(0, 10));
 </script>
 
 <header class="gallery-heading">

@@ -1,3 +1,4 @@
+import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 
 export const load = (async ({ url, parent }) => {
@@ -6,7 +7,7 @@ export const load = (async ({ url, parent }) => {
 	let numItem = parseInt(numItemParam ?? '-1') ?? -1;
 
 	if (showData.common.gallery.length === 0) {
-		throw new Error('No gallery items found');
+		error(404, 'No gallery items found for ' + showData.common.title);
 	}
 
 	if (numItem === -1) {

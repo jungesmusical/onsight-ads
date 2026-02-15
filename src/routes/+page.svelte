@@ -15,7 +15,7 @@
 </main>
 
 <footer>
-	<p class="ta-center c-sec-fg-2 fs-small">
+	<p class="ta-center c-sec-fg-2 fs-xxs">
 		Erstellt mit ❤️ von Finn Maybauer für das Junge Musical Leverkusen e.V.
 	</p>
 </footer>

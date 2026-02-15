@@ -1,11 +1,15 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	const { params } = $props<{ data: PageData; params: any }>();
+	const { data, params } = $props<{ data: PageData; }>();
+
+  const showData = $derived(data.showData);
+
 </script>
 
 <main>
-	<h1>OnSight Ads</h1>
+	<h1>{showData.common.title}</h1>
+	<h2>OnSight Ads</h2>
 
 	<ul aria-label="Nutzbare Einzelanzeigen">
 		<li><a href="{params.musical}/cast">Cast</a></li>
@@ -17,7 +21,7 @@
 </main>
 
 <footer>
-	<p class="ta-center c-sec-fg-2 fs-small">
+	<p class="ta-center c-sec-fg-2 fs-xxs">
 		Erstellt mit ❤️ von Finn Maybauer für das Junge Musical Leverkusen e.V.
 	</p>
 </footer>

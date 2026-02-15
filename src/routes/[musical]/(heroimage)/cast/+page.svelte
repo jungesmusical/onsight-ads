@@ -43,8 +43,8 @@
 	const { data } = $props<{ data: PageData }>();
 	const showData = $derived(data.showData);
 
-	let currentTime = $state(new Date(Date.now()));
-	let nextShowsLive = $derived(getNextShows(showData.shows, currentTime));
+  let currentTime = $state(() => data.date ? new Date(data.date) : new Date(Date.now()));
+  let nextShowsLive = $derived(getNextShows(showData.shows, currentTime()));
 	let numberOfNextShows = $derived(nextShowsLive.length);
 
 	let showIterator = $state(0);
@@ -55,7 +55,7 @@
 	let progress = $state(0);
 
 	setInterval(() => {
-		currentTime = new Date(Date.now());
+    currentTime = () => data.date ? new Date(data.date) : new Date(Date.now());
 
 		progress += 0.01;
 		if (progress > MAX_PROGRESS_TIME) {
@@ -78,6 +78,10 @@
 
 {#if show === undefined}
 	<p class="ta-center">Aktuell keine aktive Veranstaltung...</p>
+  <p class="ta-center fs-xxs c-fg-3">{new Intl.DateTimeFormat("de-DE", {
+    dateStyle: "full",
+    timeStyle: "long",
+  }).format(currentTime())}</p>
 {:else}
 	<p class="ta-center">
 		{show?.companies.join(', ')}
