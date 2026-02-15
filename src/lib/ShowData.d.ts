@@ -4,6 +4,11 @@ type RolePersons = {
 	isWalkInCover: boolean;
 };
 
+type SourceImage = {
+	source: Array<{ srcset: string; type?: string }>;
+	img: { src: string; srcset?: string; alt?: string; focus?: string };
+};
+
 type SingleShow = {
 	isPublic: boolean;
 	timestamp: string;
@@ -13,7 +18,7 @@ type SingleShow = {
 		ensemble: string[];
 		roles: RolePersons[];
 	};
-	conductor: string;
+	conductor: string | null;
 };
 
 type ShowData = {
@@ -31,6 +36,19 @@ type ShowData = {
 		creativeTeam: (RolePersons & { lead: boolean })[];
 		foh: RolePersons[];
 		disclaimer: string?;
+		media: {
+			image: SourceImage?;
+			video: {
+				source: Array<{ src: string; type: string }>;
+				video: { poster: string | null };
+			} | null;
+		};
+		gallery: Array<{
+			title: string;
+			subtitle?: string;
+			year: string;
+			images: SourceImage[];
+		}>;
 	};
 	shows: SingleShow[];
 };

@@ -12,9 +12,9 @@
 		"lint:fix": "prettier --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-node": "^5.0.0",
-		"@sveltejs/kit": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^4.0.4",
+		"@sveltejs/adapter-node": "^5.4.0",
+		"@sveltejs/kit": "^2.49.2",
+		"@sveltejs/vite-plugin-svelte": "^6.2.1",
 		"@types/eslint": "^9.6.0",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
@@ -22,10 +22,11 @@
 		"globals": "^15.12.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
+		"sass-embedded": "^1.97.1",
 		"svelte": "^5.1.9",
 		"svelte-check": "^4.1.0",
 		"typescript": "^5.0.0",
 		"typescript-eslint": "^8.12.2",
-		"vite": "^5.0.3"
+		"vite": "^7.3.0"
 	}
 }
