@@ -3,7 +3,7 @@
 </script>
 
 <main>
-<h1>{$page.status}</h1>
+	<h1>{$page.status}</h1>
 
-<p class="ta-center">{$page.error?.message}</p>
+	<p class="ta-center">{$page.error?.message}</p>
 </main>

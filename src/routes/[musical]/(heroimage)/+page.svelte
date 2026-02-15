@@ -1,10 +1,9 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 
-	const { data, params } = $props<{ data: PageData; }>();
+	const { data, params } = $props<{ data: PageData }>();
 
-  const showData = $derived(data.showData);
-
+	const showData = $derived(data.showData);
 </script>
 
 <main>
