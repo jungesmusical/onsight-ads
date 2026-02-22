@@ -13,10 +13,10 @@ on:
         required: true
 
 env:
-  DOKKU_HOST: jungesmusical.de
+  DOKKU_HOST: srv02.jungesmusical.de
   DOKKU_PORT: 22
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}--${{ inputs.environment }}
   cancel-in-progress: false
 
@@ -42,7 +42,7 @@ jobs:
         uses: dokku/github-action@130f400079c51a38a02389708538d85d39f834ec # v1.7.0
         with:
           git_remote_url: ssh://dokku@${{ env.DOKKU_HOST }}:${{ env.DOKKU_PORT }}/${{ inputs.appname }}
-          ssh_private_key: ${{ secrets.DOKKU_DEPLOY_JUNGESMUSICAL_SRV01 }}
+          ssh_private_key: ${{ secrets.DOKKU_DEPLOY_JUNGESMUSICAL_SRV02 }}
       -
         name: Update deployment Status
         uses: bobheadxi/deployments@648679e8e4915b27893bd7dbc35cb504dc915bc8 # v1.5.0
