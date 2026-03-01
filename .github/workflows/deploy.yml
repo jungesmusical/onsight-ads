@@ -39,7 +39,7 @@ jobs:
           fetch-depth: 0
       -
         name: Push to dokku
-        uses: dokku/github-action@130f400079c51a38a02389708538d85d39f834ec # v1.7.0
+        uses: dokku/github-action@33d50129fe718c3f907c8b29ea58776ed3cf8221 # v1.8.0
         with:
           git_remote_url: ssh://dokku@${{ env.DOKKU_HOST }}:${{ env.DOKKU_PORT }}/${{ inputs.appname }}
           ssh_private_key: ${{ secrets.DOKKU_DEPLOY_JUNGESMUSICAL_SRV01 }}
