@@ -35,7 +35,7 @@ type ShowData = {
 		orchestra: RolePersons[];
 		creativeTeam: (RolePersons & { lead: boolean })[];
 		foh: RolePersons[];
-		disclaimer: string?;
+		disclaimer?: string;
 		media: {
 			image: SourceImage?;
 			video: {
@@ -43,12 +43,16 @@ type ShowData = {
 				video: { poster: string | null };
 			} | null;
 		};
-		gallery: Array<{
+		gallery?: Array<{
 			title: string;
 			subtitle?: string;
 			year: string;
 			images: SourceImage[];
 		}>;
+    externalAds?: Array<{
+      title: string;
+      subtitle?: string;
+    }>;
 	};
 	shows: SingleShow[];
 };

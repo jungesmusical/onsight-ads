@@ -6,15 +6,15 @@ export const load = (async ({ url, parent }) => {
 	const numItemParam = url.searchParams.get('item');
 	let numItem = parseInt(numItemParam ?? '-1') ?? -1;
 
-	if (showData.common.gallery === undefined || showData.common.gallery.length === 0) {
-		error(404, 'No gallery items found for ' + showData.common.title);
+	if (showData.common.externalAds === undefined || showData.common.externalAds.length === 0) {
+		error(404, 'No external ads found for ' + showData.common.title);
 	}
 
 	if (numItem === -1) {
-		numItem = Math.floor(Math.random() * showData.common.gallery.length);
+		numItem = Math.floor(Math.random() * showData.common.externalAds.length);
 	}
 
-	if (numItem < 0 || numItem >= showData.common.gallery.length) {
+	if (numItem < 0 || numItem >= showData.common.externalAds.length) {
 		numItem = 0;
 	}
 
