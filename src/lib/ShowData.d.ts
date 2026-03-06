@@ -23,6 +23,7 @@ type SingleShow = {
 
 type ShowData = {
 	common: {
+    showId: string;
 		title: string;
 		venue: {
 			type: string;
@@ -44,10 +45,12 @@ type ShowData = {
 			} | null;
 		};
 		gallery?: Array<{
+      showId: string;
 			title: string;
 			subtitle?: string;
 			year: string;
 			images: SourceImage[];
+      photographers?: string[];
 		}>;
     externalAds?: Array<{
       title: string;
