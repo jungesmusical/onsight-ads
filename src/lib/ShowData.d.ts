@@ -5,8 +5,15 @@ type RolePersons = {
 };
 
 type SourceImage = {
+	type: 'image';
 	source: Array<{ srcset: string; type?: string }>;
 	img: { src: string; srcset?: string; alt?: string; focus?: string };
+};
+
+type SourceVideo = {
+	type: 'video';
+	source: Array<{ src: string; type: string }>;
+	video: { poster?: string | null };
 };
 
 type SingleShow = {
@@ -23,7 +30,7 @@ type SingleShow = {
 
 type ShowData = {
 	common: {
-    showId: string;
+		showId: string;
 		title: string;
 		venue: {
 			type: string;
@@ -45,17 +52,17 @@ type ShowData = {
 			} | null;
 		};
 		gallery?: Array<{
-      showId: string;
+			showId: string;
 			title: string;
 			subtitle?: string;
 			year: string;
 			images: SourceImage[];
-      photographers?: string[];
+			photographers?: string[];
 		}>;
-    externalAds?: Array<{
-      title: string;
-      subtitle?: string;
-    }>;
+		externalAds?: Array<{
+			company: string;
+			media: SourceImage | SourceVideo;
+		}>;
 	};
 	shows: SingleShow[];
 };

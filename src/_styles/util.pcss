@@ -226,3 +226,44 @@ h6,
 	hyphens: none;
 	word-break: keep-all;
 }
+
+.flow {
+	--flow-gap: 1em;
+}
+
+.flow--gap-0 {
+	--flow-gap: 0;
+}
+
+.flow--gap-xxs {
+	--flow-gap: var(--fs-xxs);
+}
+
+.flow--gap-xs {
+	--flow-gap: var(--fs-xs);
+}
+
+.flow--gap-s {
+	--flow-gap: var(--fs-s);
+}
+
+.flow--gap-m {
+	--flow-gap: var(--fs-m);
+}
+
+.flow--gap-l {
+	--flow-gap: var(--fs-l);
+}
+
+.flow--gap-xl {
+	--flow-gap: var(--fs-xl);
+}
+
+.flow > *:first-child {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.flow > * + * {
+	margin-bottom: 0;
+	margin-top: var(--flow-gap, 1em);
+}

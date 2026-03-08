@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { ShowData } from '$lib';
 	import type { PageData } from './$types';
-  import galleryStore from './store.svelte';
+	import galleryStore from './store.svelte';
 
 	const { data } = $props<{ data: PageData }>();
 	const showData: ShowData = $derived(data.showData);
-  const debug: boolean = $derived(data.debug);
+	const debug: boolean = $derived(data.debug);
 
 	let currentNumItem = $state(0);
 	galleryStore.numItem.subscribe((value) => {
@@ -15,64 +15,65 @@
 	const gallery = $derived(showData.common.gallery?.[currentNumItem]);
 	const limitedImages = $derived(gallery?.images.slice(0, 10));
 
-  galleryStore.numItem.subscribe((value) => {
-    const url = new URL(window.location.href);
-    url.searchParams.set('item', value.toString());
-    window.history.replaceState({}, '', url);
-  });
+	galleryStore.numItem.subscribe((value) => {
+		const url = new URL(window.location.href);
+		url.searchParams.set('item', value.toString());
+		window.history.replaceState({}, '', url);
+	});
 </script>
 
 {#if !gallery}
-  <p>Keine Galerie gefunden.</p>
+	<p>Keine Galerie gefunden.</p>
 {:else}
+	<header class="gallery-heading">
+		{#if gallery.showId === showData.common.showId}
+			<h1>{gallery.title}</h1>
+		{:else}
+			<h1>{gallery.title} <span>({gallery.year})</span></h1>
+			{#if gallery.subtitle}
+				<p>{gallery.subtitle}</p>
+			{/if}
+		{/if}
 
-<header class="gallery-heading">
-  {#if gallery.showId === showData.common.showId}
-    <h1>{gallery.title}</h1>
-  {:else}
-    <h1>{gallery.title} <span>({gallery.year})</span></h1>
-    {#if gallery.subtitle}
-      <p>{gallery.subtitle}</p>
-    {/if}
-  {/if}
+		{#if gallery.photographers && gallery.photographers.length > 0}
+			<p class="fs-xxs c-fg-3">Fotos von: {gallery.photographers.join(', ')}</p>
+		{/if}
+	</header>
 
-  {#if gallery.photographers && gallery.photographers.length > 0}
-    <p class="fs-xxs c-fg-3">Fotos von: {gallery.photographers.join(', ')}</p>
-  {/if}
-</header>
-
-{#if debug}
-<nav class="gallery-nav">
-  <ul>
-    {#each showData.common.gallery as item, index}
-      <li>
-        <button onclick={() => galleryStore.numItem.set(index)} class:active={index === currentNumItem}>
-          {item.title} ({item.year})
-        </button>
-      </li>
-    {/each}
-  </ul>
-</nav>
-{/if}
-
-<div class="gallery-grid">
-	{#each limitedImages as image}
-		<div class="gallery-grid__item">
-			<picture>
-				{#each image.source as source}
-					<source srcset={source.srcset} type={source.type} />
+	{#if debug}
+		<nav class="gallery-nav">
+			<ul>
+				{#each showData.common.gallery as item, index}
+					<li>
+						<button
+							onclick={() => galleryStore.numItem.set(index)}
+							class:active={index === currentNumItem}
+						>
+							{item.title} ({item.year})
+						</button>
+					</li>
 				{/each}
-				<img
-					src={image.img.src}
-					alt={image.img.alt}
-					loading="lazy"
-					style="object-position: {image.img.focus ?? '50% 50%'}"
-				/>
-			</picture>
-		</div>
-	{/each}
-</div>
+			</ul>
+		</nav>
+	{/if}
 
+	<div class="gallery-grid">
+		{#each limitedImages as image}
+			<div class="gallery-grid__item">
+				<picture>
+					{#each image.source as source}
+						<source srcset={source.srcset} type={source.type} />
+					{/each}
+					<img
+						src={image.img.src}
+						alt={image.img.alt}
+						loading="lazy"
+						style="object-position: {image.img.focus ?? '50% 50%'}"
+					/>
+				</picture>
+			</div>
+		{/each}
+	</div>
 {/if}
 
 <style lang="scss">
@@ -299,35 +300,34 @@
 		}
 	}
 
-  .gallery-nav {
-    position: absolute;
-    top: var(--xxs);
-    left: var(--xxs);
-    z-index: 2;
+	.gallery-nav {
+		position: absolute;
+		top: var(--xxs);
+		left: var(--xxs);
+		z-index: 2;
 
-    ul {
-      display: flex;
-      flex-direction: column;
-      gap: var(--xxs);
-      list-style: none;
-      padding: 0;
-      margin: 0;
+		ul {
+			display: flex;
+			flex-direction: column;
+			gap: var(--xxs);
+			list-style: none;
+			padding: 0;
+			margin: 0;
 
-      button {
-        color: white;
-        text-decoration: none;
-        font-size: var(--fs-xxs);
-        padding: var(--xxs);
-        background-color: rgba(0, 0, 0, 0.5);
-        border-radius: var(--xs);
+			button {
+				color: white;
+				text-decoration: none;
+				font-size: var(--fs-xxs);
+				padding: var(--xxs);
+				background-color: rgba(0, 0, 0, 0.5);
+				border-radius: var(--xs);
 
-        &.active {
-          background-color: rgba(255, 255, 255, 0.8);
-          color: black;
-          font-weight: var(--fw-strong);
-        }
-      }
-    }
-  }
-
+				&.active {
+					background-color: rgba(255, 255, 255, 0.8);
+					color: black;
+					font-weight: var(--fw-strong);
+				}
+			}
+		}
+	}
 </style>

@@ -19,7 +19,7 @@ export const load: PageLoad = async ({ fetch }) => {
 			productionsData
 		};
 	} catch (e) {
-    console.error('Error fetching data from server:', e);
+		console.error('Error fetching data from server:', e);
 
 		error(500, 'Failed to fetch data from server');
 	}

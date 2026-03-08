@@ -2,11 +2,10 @@ import { error } from '@sveltejs/kit';
 import type { LayoutLoad } from './$types';
 import galleryStore from './store.svelte';
 
-
 export const load = (async ({ url, parent }) => {
 	const { showData } = await parent();
 
-  // NumItem
+	// NumItem
 	const numItemParam = url.searchParams.get('item');
 	let numItem = parseInt(numItemParam ?? '-1') ?? -1;
 
@@ -22,14 +21,13 @@ export const load = (async ({ url, parent }) => {
 		numItem = 0;
 	}
 
-  galleryStore.numItem.set(numItem);
+	galleryStore.numItem.set(numItem);
 
-  // Debug
-  const debugParam = url.searchParams.get('debug')
-  const debug = debugParam === 'true' || debugParam === '1' || debugParam !== null;
+	// Debug
+	const debugParam = url.searchParams.get('debug');
+	const debug = debugParam === 'true' || debugParam === '1' || debugParam !== null;
 
 	return {
-    debug,
-  };
+		debug
+	};
 }) satisfies LayoutLoad;
-

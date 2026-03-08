@@ -19,7 +19,7 @@ export const load: LayoutLoad = async ({ fetch, params }) => {
 			showData
 		};
 	} catch (e) {
-    console.error('Error fetching data from server:', e);
+		console.error('Error fetching data from server:', e);
 		error(404, 'Nothing found for ' + params.musical);
 	}
 };
