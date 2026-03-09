@@ -7,23 +7,24 @@ const currentPosition = writable(0);
 const STORAGE_PREFIX = 'onsight-ads-shuffle';
 
 /**
- * Get storage key for a specific route
+ * Get storage key for a specific route and musical
  */
-function getStorageKey(routeKey: string): string {
-	return `${STORAGE_PREFIX}-${routeKey}`;
+function getStorageKey(musical: string, routeKey: string): string {
+	return `${STORAGE_PREFIX}-${musical}-${routeKey}`;
 }
 
 /**
  * Load shuffle state from localStorage
  */
 function loadFromStorage(
+	musical: string,
 	routeKey: string,
 	arrayLength: number
 ): { indices: number[]; position: number } | null {
 	if (typeof window === 'undefined') return null;
 
 	try {
-		const stored = localStorage.getItem(getStorageKey(routeKey));
+		const stored = localStorage.getItem(getStorageKey(musical, routeKey));
 		if (!stored) return null;
 
 		const data = JSON.parse(stored);
@@ -46,11 +47,11 @@ function loadFromStorage(
 /**
  * Save shuffle state to localStorage
  */
-function saveToStorage(routeKey: string, indices: number[], position: number): void {
+function saveToStorage(musical: string, routeKey: string, indices: number[], position: number): void {
 	if (typeof window === 'undefined') return;
 
 	try {
-		localStorage.setItem(getStorageKey(routeKey), JSON.stringify({ indices, position }));
+		localStorage.setItem(getStorageKey(musical, routeKey), JSON.stringify({ indices, position }));
 	} catch (e) {
 		console.warn('Failed to save shuffle state to localStorage:', e);
 	}
@@ -71,23 +72,24 @@ function shuffle<T>(array: T[]): T[] {
 /**
  * Initialize or reset the shuffled sequence
  */
-function initializeShuffledSequence(routeKey: string, arrayLength: number): void {
+function initializeShuffledSequence(musical: string, routeKey: string, arrayLength: number): void {
 	const indices = Array.from({ length: arrayLength }, (_, i) => i);
 	const shuffledArray = shuffle(indices);
 	shuffledIndices.set(shuffledArray);
 	currentPosition.set(0);
-	saveToStorage(routeKey, shuffledArray, 0);
+	saveToStorage(musical, routeKey, shuffledArray, 0);
 }
 
 /**
  * Get the next item in the shuffled sequence
  * When reaching the end, reshuffle and start over
+ * @param musical - The musical identifier (e.g., 'jm2024')
  * @param routeKey - Unique key to identify the route (e.g., 'gallery', 'external-ads')
  * @param arrayLength - The length of the array
  */
-export function getNextItem(routeKey: string, arrayLength: number): number {
+export function getNextItem(musical: string, routeKey: string, arrayLength: number): number {
 	// Try to load from storage first
-	const stored = loadFromStorage(routeKey, arrayLength);
+	const stored = loadFromStorage(musical, routeKey, arrayLength);
 
 	let indices = get(shuffledIndices);
 	let position = get(currentPosition);
@@ -101,7 +103,7 @@ export function getNextItem(routeKey: string, arrayLength: number): number {
 	}
 	// Initialize if not yet set up or if array length changed
 	else if (indices.length !== arrayLength) {
-		initializeShuffledSequence(routeKey, arrayLength);
+		initializeShuffledSequence(musical, routeKey, arrayLength);
 		indices = get(shuffledIndices);
 		position = 0;
 	}
@@ -112,11 +114,11 @@ export function getNextItem(routeKey: string, arrayLength: number): number {
 	// Move to next position, reshuffle if at the end
 	position++;
 	if (position >= indices.length) {
-		initializeShuffledSequence(routeKey, arrayLength);
+		initializeShuffledSequence(musical, routeKey, arrayLength);
 		position = 0;
 	} else {
 		currentPosition.set(position);
-		saveToStorage(routeKey, indices, position);
+		saveToStorage(musical, routeKey, indices, position);
 	}
 
 	return itemIndex;
@@ -126,17 +128,18 @@ export function getNextItem(routeKey: string, arrayLength: number): number {
  * Parse and validate the item parameter from URL
  * If no item specified, get the next item from the shuffled sequence
  * @param url - The URL object containing search params
+ * @param musical - The musical identifier (e.g., 'jm2024')
  * @param routeKey - Unique key to identify the route (e.g., 'gallery', 'external-ads')
  * @param arrayLength - The length of the array to validate against
  * @returns The validated item index
  */
-export function parseItemParam(url: URL, routeKey: string, arrayLength: number): number {
+export function parseItemParam(url: URL, musical: string, routeKey: string, arrayLength: number): number {
 	const numItemParam = url.searchParams.get('item');
 	let numItem = parseInt(numItemParam ?? '-1') ?? -1;
 
 	// If no item specified, get next from shuffled sequence
 	if (numItem === -1) {
-		numItem = getNextItem(routeKey, arrayLength);
+		numItem = getNextItem(musical, routeKey, arrayLength);
 	}
 
 	// Validate bounds

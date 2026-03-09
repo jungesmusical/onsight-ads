@@ -30,7 +30,7 @@
 		{/if}
 
 		{#if gallery.photographers && gallery.photographers.length > 0}
-			<p class="fs-xxs c-fg-3">Fotos von: {gallery.photographers.join(', ')}</p>
+			<p class="gallery-heading__photographers">Fotos von: {gallery.photographers.join(', ')}</p>
 		{/if}
 	</header>
 
@@ -175,9 +175,9 @@
 			--numOfRows: 3;
 
 			grid-template-areas:
-				'gallery_item_1 gallery_item_1 gallery_item_1'
-				'gallery_item_2 gallery_item_3 gallery_item_3'
-				'gallery_item_4 gallery_item_4 gallery_item_5';
+				'gallery_item_1 gallery_item_1 gallery_item_2'
+				'gallery_item_3 gallery_item_4 gallery_item_4'
+				'gallery_item_5 gallery_item_5 gallery_item_5';
 
 			@media (orientation: landscape) {
 				--numOfCols: 3;
@@ -264,8 +264,8 @@
 	}
 
 	.gallery-heading {
-		--margin-overlap: 6rem;
-		--padding-inner: 8rem;
+		--margin-overlap:46rem;
+		--padding-inner: 6rem;
 
 		position: absolute;
 		bottom: 0;
@@ -292,6 +292,13 @@
 				font-weight: var(--fw-regular);
 			}
 		}
+
+    &__photographers {
+      font-size: var(--fs-xxs);
+      color: var(--c-fg-3);
+      margin-top: var(--xxs);
+      margin-bottom: calc(var(--xxs) * -1);
+    }
 	}
 
 	.gallery-nav {
