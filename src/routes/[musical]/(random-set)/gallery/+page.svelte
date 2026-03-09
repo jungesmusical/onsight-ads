@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { ShowData } from '$lib';
 	import type { PageData } from './$types';
-	import sharedStore from '../store.svelte';
+	import * as sharedStore from '../store.svelte';
 
 	const { data } = $props<{ data: PageData }>();
 	const showData: ShowData = $derived(data.showData);
