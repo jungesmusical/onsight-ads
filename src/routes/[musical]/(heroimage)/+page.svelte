@@ -16,6 +16,7 @@
 		<li><a href="{params.musical}/crew">Crew</a></li>
 		<li><a href="{params.musical}/disclaimer">Disclaimer</a></li>
 		<li><a href="{params.musical}/gallery">Gallery</a></li>
+		<li><a href="{params.musical}/external-ads">External Ads</a></li>
 	</ul>
 </main>
 
