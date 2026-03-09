@@ -25,7 +25,7 @@
 		{:else}
 			<h1>{gallery.title} <span>({gallery.year})</span></h1>
 			{#if gallery.subtitle}
-				<p>{gallery.subtitle}</p>
+				<p class="gallery-heading__subtitle">{gallery.subtitle}</p>
 			{/if}
 		{/if}
 
@@ -264,7 +264,7 @@
 	}
 
 	.gallery-heading {
-		--margin-overlap:46rem;
+		--margin-overlap: 12rem;
 		--padding-inner: 6rem;
 
 		position: absolute;
@@ -293,12 +293,17 @@
 			}
 		}
 
-    &__photographers {
-      font-size: var(--fs-xxs);
-      color: var(--c-fg-3);
-      margin-top: var(--xxs);
-      margin-bottom: calc(var(--xxs) * -1);
-    }
+		&__subtitle {
+			margin-top: var(--xxs);
+			font-size: var(--fs-xs);
+		}
+
+		&__photographers {
+			font-size: var(--fs-xxs);
+			color: var(--c-fg-3);
+			margin-top: var(--xs);
+			margin-bottom: calc(var(--xs) * -1);
+		}
 	}
 
 	.gallery-nav {

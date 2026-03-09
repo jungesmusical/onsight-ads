@@ -47,7 +47,12 @@ function loadFromStorage(
 /**
  * Save shuffle state to localStorage
  */
-function saveToStorage(musical: string, routeKey: string, indices: number[], position: number): void {
+function saveToStorage(
+	musical: string,
+	routeKey: string,
+	indices: number[],
+	position: number
+): void {
 	if (typeof window === 'undefined') return;
 
 	try {
@@ -133,7 +138,12 @@ export function getNextItem(musical: string, routeKey: string, arrayLength: numb
  * @param arrayLength - The length of the array to validate against
  * @returns The validated item index
  */
-export function parseItemParam(url: URL, musical: string, routeKey: string, arrayLength: number): number {
+export function parseItemParam(
+	url: URL,
+	musical: string,
+	routeKey: string,
+	arrayLength: number
+): number {
 	const numItemParam = url.searchParams.get('item');
 	let numItem = parseInt(numItemParam ?? '-1') ?? -1;
 

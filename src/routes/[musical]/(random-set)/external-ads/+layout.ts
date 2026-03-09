@@ -9,7 +9,12 @@ export const load = (async ({ url, params, parent }) => {
 		error(404, 'No external ads found for ' + showData.common.title);
 	}
 
-	const numItem = parseItemParam(url, params.musical, 'external-ads', showData.common.externalAds.length);
+	const numItem = parseItemParam(
+		url,
+		params.musical,
+		'external-ads',
+		showData.common.externalAds.length
+	);
 	sharedStore.numItem.set(numItem);
 
 	return {};
