@@ -1,25 +1,19 @@
 <script lang="ts">
 	import type { ShowData } from '$lib';
 	import type { PageData } from './$types';
-	import galleryStore from './store.svelte';
+	import sharedStore from '../store.svelte';
 
 	const { data } = $props<{ data: PageData }>();
 	const showData: ShowData = $derived(data.showData);
 	const debug: boolean = $derived(data.debug);
 
 	let currentNumItem = $state(0);
-	galleryStore.numItem.subscribe((value) => {
+	sharedStore.numItem.subscribe((value) => {
 		currentNumItem = value;
 	});
 
 	const gallery = $derived(showData.common.gallery?.[currentNumItem]);
 	const limitedImages = $derived(gallery?.images.slice(0, 10));
-
-	galleryStore.numItem.subscribe((value) => {
-		const url = new URL(window.location.href);
-		url.searchParams.set('item', value.toString());
-		window.history.replaceState({}, '', url);
-	});
 </script>
 
 {#if !gallery}
@@ -46,7 +40,7 @@
 				{#each showData.common.gallery as item, index}
 					<li>
 						<button
-							onclick={() => galleryStore.numItem.set(index)}
+							onclick={() => sharedStore.numItem.set(index)}
 							class:active={index === currentNumItem}
 						>
 							{item.title} ({item.year})
