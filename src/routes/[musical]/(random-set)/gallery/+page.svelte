@@ -13,7 +13,8 @@
 	});
 
 	const gallery = $derived(showData.common.gallery?.[currentNumItem]);
-	const limitedImages = $derived(gallery?.images.slice(0, 10));
+	const limitedImages = $derived(gallery?.images.slice(0, 10) ?? []);
+	const imageCount = $derived(limitedImages.length);
 </script>
 
 {#if !gallery}
@@ -51,7 +52,7 @@
 		</nav>
 	{/if}
 
-	<div class="gallery-grid">
+	<div class={`gallery-grid items-${imageCount}`}>
 		{#each limitedImages as image}
 			<div class="gallery-grid__item">
 				<picture>
@@ -72,7 +73,9 @@
 
 <style lang="scss">
 	picture {
-		display: contents;
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 	.gallery-grid {
 		--numOfRows: 6;
@@ -82,16 +85,11 @@
 		grid-template-rows: repeat(var(--numOfRows), minmax(0, 1fr));
 		gap: var(--xxs);
 		padding: var(--xxs);
-		height: calc(100vh - 2 * var(--xxs));
+		height: 100%;
+		height: calc(100vh - var(--xxs) - var(--xxs));
 		position: relative;
 
-		@mixin numberOfItems($n) {
-			&:has(> :nth-child(#{$n})):not(:has(> :nth-child(#{$n + 1}))) {
-				@content;
-			}
-		}
-
-		@include numberOfItems(10) {
+		&.items-10 {
 			--numOfRows: 5;
 			--numOfCols: 3;
 
@@ -113,7 +111,7 @@
 			}
 		}
 
-		@include numberOfItems(9) {
+		&.items-9 {
 			--numOfRows: 5;
 			--numOfCols: 3;
 
@@ -125,7 +123,7 @@
 				'gallery_item_9 gallery_item_9 gallery_item_9';
 		}
 
-		@include numberOfItems(8) {
+		&.items-8 {
 			--numOfRows: 6;
 			--numOfCols: 3;
 
@@ -138,7 +136,7 @@
 				'gallery_item_7 gallery_item_7 gallery_item_8';
 		}
 
-		@include numberOfItems(7) {
+		&.items-7 {
 			--numOfRows: 6;
 			--numOfCols: 4;
 
@@ -151,7 +149,7 @@
 				'gallery_item_6 gallery_item_6 gallery_item_7 gallery_item_7';
 		}
 
-		@include numberOfItems(6) {
+		&.items-6 {
 			--numOfRows: 3;
 			--numOfCols: 3;
 
@@ -170,7 +168,7 @@
 			}
 		}
 
-		@include numberOfItems(5) {
+		&.items-5 {
 			--numOfCols: 3;
 			--numOfRows: 3;
 
@@ -189,7 +187,7 @@
 			}
 		}
 
-		@include numberOfItems(4) {
+		&.items-4 {
 			--numOfCols: 3;
 			--numOfRows: 3;
 
@@ -208,7 +206,7 @@
 			}
 		}
 
-		@include numberOfItems(3) {
+		&.items-3 {
 			--numOfCols: 1;
 			--numOfRows: 3;
 
@@ -225,7 +223,7 @@
 			}
 		}
 
-		@include numberOfItems(2) {
+		&.items-2 {
 			--numOfCols: 1;
 			--numOfRows: 2;
 
@@ -241,7 +239,7 @@
 			}
 		}
 
-		@include numberOfItems(1) {
+		&.items-1 {
 			--numOfCols: 1;
 			--numOfRows: 1;
 
@@ -256,6 +254,7 @@
 			}
 
 			img {
+				display: block;
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
@@ -302,7 +301,7 @@
 			font-size: var(--fs-xxs);
 			color: var(--c-fg-3);
 			margin-top: var(--xs);
-			margin-bottom: calc(var(--xs) * -1);
+			margin-bottom: calc(0px - var(--xs));
 		}
 	}
 

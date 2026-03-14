@@ -13,8 +13,10 @@
 		max-width: none;
 		padding: var(--m);
 		gap: var(--m);
+		max-height: 100%;
 		max-height: 100vh;
-		height: calc(100vh - 2 * var(--m));
+		height: 100%;
+		height: calc(100vh - var(--m) - var(--m));
 		overflow: hidden;
 		display: grid;
 		align-items: stretch;
