@@ -46,7 +46,7 @@
 		padding: 0;
 		object-fit: cover;
 		object-position: center;
-		width: calc(100% - 2 * var(--m));
+		width: calc(100% - var(--m) - var(--m));
 		max-width: none;
 		aspect-ratio: 21 / 9;
 		border-radius: var(--m);

@@ -12,6 +12,7 @@
 	main {
 		max-width: none;
 		padding: 0;
+		max-height: 100%;
 		max-height: 100vh;
 		overflow: hidden;
 	}
