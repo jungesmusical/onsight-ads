@@ -11,15 +11,18 @@ Kiosk mode is controlled via URL query parameters and works globally from the ro
 ### Query parameters
 
 - `kiosk`
-	- Enables auto-rotation when present as `?kiosk`, `?kiosk=1`, or `?kiosk=true`.
-	- Disabled by default.
+  - Enables auto-rotation when present as `?kiosk`, `?kiosk=1`, or `?kiosk=true`.
+  - Disabled by default.
 - `interval`
-	- Rotation interval in **seconds**.
-	- Default: `10`
-	- Allowed range: `1` to `3600`
+  - Rotation interval in **seconds**.
+  - Default: `10`
+  - Allowed range: `1` to `3600`
 - `playlist`
-	- Comma-separated list of routes to rotate through.
-	- Can be aliases (see below), relative route fragments, or absolute paths.
+  - Comma-separated list of routes to rotate through.
+  - Can be aliases (see below), relative route fragments, or absolute paths.
+- `disableHeaderVideo`
+  - Disables video in the hero header and forces image usage when an image exists.
+  - Enabled when present as `?disableHeaderVideo`, `?disableHeaderVideo=1`, or `?disableHeaderVideo=true`.
 
 ### Playlist aliases
 
@@ -49,6 +52,7 @@ If `playlist` is not provided and the current route includes a musical slug, the
 - `http://localhost:5173/hamilton?kiosk=1&interval=20`
 - `http://localhost:5173/hamilton?kiosk=1&interval=10&playlist=cast,crew,gallery,external-ads`
 - `http://localhost:5173/hamilton?kiosk=1&playlist=/hamilton/cast,/hamilton/gallery`
+- `http://localhost:5173/hamilton?kiosk=1&disableHeaderVideo=1`
 
 ## Developing
 

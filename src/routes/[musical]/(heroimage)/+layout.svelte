@@ -4,9 +4,10 @@
 
 	const { data, children } = $props<{ data: LayoutData; children: Snippet }>();
 	const showData = $derived(data.showData);
+	const disableHeaderVideo = $derived(data.disableHeaderVideo ?? false);
 </script>
 
-{#if showData?.common?.media?.video}
+{#if !disableHeaderVideo && showData?.common?.media?.video}
 	<video
 		autoplay
 		loop
