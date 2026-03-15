@@ -20,6 +20,7 @@ type SingleShow = {
 	isPublic: boolean;
 	timestamp: string;
 	ticketUrl: string;
+  customName?: string;
 	companies: string[];
 	cast: {
 		ensemble: string[];

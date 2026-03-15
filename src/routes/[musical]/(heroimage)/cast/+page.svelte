@@ -95,10 +95,16 @@
 			})} Uhr
 		</span>
 
-		{#if show?.isPublic === false}
-			<br />
-			Nicht öffentliche Veranstaltung
-		{/if}
+    {#if show.isPublic === false || show.customName}
+      <br />
+      <span class="c-fg-3">
+      {#if show.isPublic === false}
+      Nicht öffentliche Veranstaltung{#if show.customName}: {show.customName}{/if}
+      {:else}
+      {show.customName}
+      {/if}
+      </span>
+    {/if}
 	</p>
 
 	{#if show.cast.roles.length > 0}
