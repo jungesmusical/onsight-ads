@@ -96,15 +96,15 @@
 		</span>
 
 		{#if show.isPublic === false || show.customName}
-      <br />
-      <span class="c-fg-3">
-      {#if show.isPublic === false}
-      Nicht öffentliche Veranstaltung{#if show.customName}: {show.customName}{/if}
-      {:else}
-      {show.customName}
-      {/if}
-      </span>
-    {/if}
+			<br />
+			<span class="c-fg-3">
+				{#if show.isPublic === false}
+					Nicht öffentliche Veranstaltung{#if show.customName}: {show.customName}{/if}
+				{:else}
+					{show.customName}
+				{/if}
+			</span>
+		{/if}
 	</p>
 
 	<h2>Orchester</h2>
