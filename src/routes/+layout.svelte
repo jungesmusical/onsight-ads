@@ -78,7 +78,6 @@
 
 		if (musical !== null) {
 			return [
-				`/${musical}`,
 				`/${musical}/cast`,
 				`/${musical}/crew`,
 				`/${musical}/orchester`,
