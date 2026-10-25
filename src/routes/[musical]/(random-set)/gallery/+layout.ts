@@ -5,11 +5,11 @@ import sharedStore, { parseItemParam } from '../store.svelte';
 export const load = (async ({ url, params, parent }) => {
 	const { showData } = await parent();
 
-	if (showData.common.gallery === undefined || showData.common.gallery.length === 0) {
-		error(404, 'No gallery items found for ' + showData.common.title);
+	if (showData.gallery.length === 0) {
+		error(404, 'No gallery items found for ' + showData.name);
 	}
 
-	const numItem = parseItemParam(url, params.musical, 'gallery', showData.common.gallery.length);
+	const numItem = parseItemParam(url, params.musical, 'gallery', showData.gallery.length);
 	sharedStore.numItem.set(numItem);
 
 	// Debug

@@ -1,35 +1,25 @@
 <script lang="ts">
-	import type { ShowData } from '$lib';
+	import type { Production } from '$lib';
+	import Picture from '$lib/Picture.svelte';
 	import type { PageData } from './$types';
 	import * as sharedStore from '../store.svelte';
 
 	const { data } = $props<{ data: PageData }>();
-	const showData: ShowData = $derived(data.showData);
+	const showData: Production = $derived(data.showData);
 
 	let currentNumItem = $state(0);
 	sharedStore.numItem.subscribe((value) => {
 		currentNumItem = value;
 	});
 
-	const singleAd = $derived(showData.common.externalAds?.[currentNumItem]);
+	const singleAd = $derived(showData.externalAds[currentNumItem]);
 </script>
 
-{#if singleAd?.media.type === 'image'}
-	<picture>
-		{#each singleAd.media.source as source}
-			<source srcset={source.srcset} type={source.type} />
-		{/each}
-		<img
-			src={singleAd.media.img.src}
-			alt={singleAd.media.img.alt}
-			style="object-position: {singleAd.media.img.focus ?? '50% 50%'}"
-		/>
-	</picture>
-{:else if singleAd?.media.type === 'video'}
-	<video autoplay loop muted playsinline poster={singleAd.media.video.poster ?? undefined}>
-		{#each singleAd.media.source as source}
-			<source src={source.src} type={source.type} />
-		{/each}
+{#if singleAd?.media?.type === 'image'}
+	<Picture image={singleAd.media} class="ad-image" />
+{:else if singleAd?.media?.type === 'video'}
+	<video autoplay loop muted playsinline poster={singleAd.media.poster ?? undefined}>
+		<source src={singleAd.media.src} type={singleAd.media.mimeType} />
 		Your browser does not support the video tag.
 	</video>
 {:else}
@@ -49,7 +39,7 @@
 		justify-self: center;
 	}
 
-	picture {
+	:global(picture:has(> .ad-image)) {
 		display: block;
 		align-self: stretch;
 		justify-self: stretch;
@@ -57,7 +47,7 @@
 		height: 100%;
 	}
 
-	img {
+	:global(.ad-image) {
 		width: 100%;
 		height: 100%;
 		aspect-ratio: 1 / 1.414;

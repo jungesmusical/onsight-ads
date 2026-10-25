@@ -4,7 +4,7 @@ import { PUBLIC_HOMEPAGE_HOST } from '$env/static/public';
 import { error } from '@sveltejs/kit';
 
 export const load: PageLoad = async ({ fetch }) => {
-	const url = PUBLIC_HOMEPAGE_HOST + '/musical.json';
+	const url = PUBLIC_HOMEPAGE_HOST + '/musical.json?v=2';
 
 	try {
 		const res = await fetch(url);

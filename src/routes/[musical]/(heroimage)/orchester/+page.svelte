@@ -1,15 +1,18 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { ShowData, SingleShow } from '$lib/ShowData';
+	import type { Production, ProductionEvent } from '$lib';
+	import { personNames } from '$lib/personNames';
 
-	function getNextShows(shows: ShowData['shows'], currentDate = new Date()): SingleShow[] {
-		const nextShows: SingleShow[] = [];
+	const listFormat = new Intl.ListFormat('de-DE', { style: 'long', type: 'conjunction' });
+
+	function getNextShows(shows: Production['events'], currentDate = new Date()): ProductionEvent[] {
+		const nextShows: ProductionEvent[] = [];
 
 		shows.forEach((show) => {
-			const start = new Date(show.timestamp);
+			const start = new Date(show.startDate);
 			start.setTime(start.getTime() - 1000 * 60 * 60 * 1.5); // 1.5 hours before show start
 
-			const end = new Date(show.timestamp);
+			const end = new Date(show.startDate);
 			end.setTime(end.getTime() + 1000 * 60 * 60 * 3); // 4 hours after show start
 
 			if (start < currentDate && currentDate < end) {
@@ -20,7 +23,7 @@
 		if (nextShows.length === 0) {
 			shows.forEach((show) => {
 				// todo: iterate over all shows and find the nearest to current time
-				const start = new Date(show.timestamp);
+				const start = new Date(show.startDate);
 				start.setTime(start.getTime() - 1000 * 60 * 60 * 1.5); // 1.5 hours before show start
 
 				if (start > currentDate && nextShows.length === 0) {
@@ -32,7 +35,10 @@
 		return nextShows;
 	}
 
-	function getNextShowIterator(shows: SingleShow[], iterator: number): SingleShow | undefined {
+	function getNextShowIterator(
+		shows: ProductionEvent[],
+		iterator: number
+	): ProductionEvent | undefined {
 		if (iterator < 0 || iterator >= shows.length) {
 			return undefined;
 		}
@@ -45,7 +51,7 @@
 
 	let currentTime = $state(() => (data.date ? new Date(data.date) : new Date(Date.now())));
 
-	let nextShowsLive = $derived(getNextShows(showData.shows, currentTime()));
+	let nextShowsLive = $derived(getNextShows(showData.events, currentTime()));
 	let numberOfNextShows = $derived(nextShowsLive.length);
 
 	let showIterator = $state(0);
@@ -89,19 +95,19 @@
 		{show?.companies.join(', ')}
 		<br />
 		<span class="c-prim-fg-1 fw-strong">
-			{new Date(show.timestamp).toLocaleString('de-DE', {
+			{new Date(show.startDate).toLocaleString('de-DE', {
 				dateStyle: 'full',
 				timeStyle: 'short'
 			})} Uhr
 		</span>
 
-		{#if show.isPublic === false || show.customName}
+		{#if show.isPublic === false || show.name}
 			<br />
 			<span class="c-fg-3">
 				{#if show.isPublic === false}
-					Nicht öffentliche Veranstaltung{#if show.customName}: {show.customName}{/if}
+					Nicht öffentliche Veranstaltung{#if show.name}: {show.name}{/if}
 				{:else}
-					{show.customName}
+					{show.name}
 				{/if}
 			</span>
 		{/if}
@@ -109,18 +115,23 @@
 
 	<h2>Orchester</h2>
 
-	{#if show?.conductor}
+	{#if show.conductors.length > 0}
 		<p class="ta-center">
-			Die Show wird dirigiert von {show?.conductor.replaceAll(' ', ' ')}.
+			Die Show wird dirigiert von {listFormat
+				.format(personNames(show.conductors, showData.people))
+				.replaceAll(' ', ' ')}.
 		</p>
 	{/if}
 
 	<ul class="dot-list">
-		{#each showData.common.orchestra as role}
+		{#each show.orchestra as role}
 			<li class="dot-list__item">
-				<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
+				<span class="dot-list__label fw-strong"><span>{role.roleName}</span></span>
 				<span class="dot-list__label no-hyphens"
-					><span>{role.persons.map((str: string) => str.replaceAll(' ', ' ')).join(', ')}</span
+					><span
+						>{personNames(role.members, showData.people)
+							.map((str) => str.replaceAll(' ', ' '))
+							.join(', ')}</span
 					></span
 				>
 			</li>

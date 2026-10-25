@@ -7,8 +7,8 @@
 
 <h2>Hinweis</h2>
 
-{#if showData.common.disclaimer}
-	{#each showData.common.disclaimer.split('\n') as block}
+{#if showData.disclaimer}
+	{#each showData.disclaimer.split('\n') as block}
 		{#if block !== ''}
 			<p class="fs-l ta-center">{block}</p>
 		{/if}

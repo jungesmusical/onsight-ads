@@ -1,7 +1,11 @@
 type ProductionsData = {
 	productions: Array<{
-		title: string;
+		uuid: string;
 		slug: string;
+		name: string;
+		startDate: string | null;
+		url: string;
+		apiUrl: string;
 	}>;
 };
 

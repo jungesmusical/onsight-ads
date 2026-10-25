@@ -1,10 +1,10 @@
 import type { LayoutLoad } from './$types';
-import type { ShowData } from '$lib/ShowData';
+import type { Production } from '$lib';
 import { PUBLIC_HOMEPAGE_HOST } from '$env/static/public';
 import { error } from '@sveltejs/kit';
 
 export const load: LayoutLoad = async ({ fetch, params }) => {
-	const url = PUBLIC_HOMEPAGE_HOST + '/musical/' + params.musical + '.json';
+	const url = PUBLIC_HOMEPAGE_HOST + '/musical/' + params.musical + '.json?v=2';
 
 	try {
 		const res = await fetch(url);
@@ -13,7 +13,7 @@ export const load: LayoutLoad = async ({ fetch, params }) => {
 			error(res.status, 'Failed to fetch show data');
 		}
 
-		const showData: ShowData = await res.json();
+		const showData: Production = await res.json();
 
 		return {
 			showData

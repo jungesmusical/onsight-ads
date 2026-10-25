@@ -1,37 +1,19 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { LayoutData } from './$types';
+	import Picture from '$lib/Picture.svelte';
 
 	const { data, children } = $props<{ data: LayoutData; children: Snippet }>();
 	const showData = $derived(data.showData);
 	const disableHeaderVideo = $derived(data.disableHeaderVideo ?? false);
 </script>
 
-{#if !disableHeaderVideo && showData?.common?.media?.video}
-	<video
-		autoplay
-		loop
-		muted
-		playsinline
-		poster={showData.common.media.video.video.poster}
-		class="artwork"
-	>
-		{#each showData.common.media.video.source as source}
-			<source src={source.src} type={source.type} />
-		{/each}
+{#if !disableHeaderVideo && showData.video}
+	<video autoplay loop muted playsinline poster={showData.video.poster} class="artwork">
+		<source src={showData.video.src} type={showData.video.mimeType} />
 	</video>
-{:else if showData?.common?.media?.image}
-	<picture>
-		{#each showData.common.media.image.source as source}
-			<source srcset={source.srcset} type={source.type} />
-		{/each}
-		<img
-			class="artwork"
-			src={showData.common.media.image.img.src}
-			srcset={showData.common.media.image.img.srcset}
-			alt={showData.common.media.image.img.alt}
-		/>
-	</picture>
+{:else if showData.image}
+	<Picture image={showData.image} class="artwork" />
 {/if}
 
 <main>
@@ -39,10 +21,10 @@
 </main>
 
 <style>
-	picture {
+	:global(picture:has(> .artwork)) {
 		display: contents;
 	}
-	.artwork {
+	:global(.artwork) {
 		margin: var(--m);
 		padding: 0;
 		object-fit: cover;

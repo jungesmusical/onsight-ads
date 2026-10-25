@@ -1,15 +1,16 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import type { ShowData, SingleShow } from '$lib/ShowData';
+	import type { Production, ProductionEvent } from '$lib';
+	import { personNames } from '$lib/personNames';
 
-	function getNextShows(shows: ShowData['shows'], currentDate = new Date()): SingleShow[] {
-		const nextShows: SingleShow[] = [];
+	function getNextShows(shows: Production['events'], currentDate = new Date()): ProductionEvent[] {
+		const nextShows: ProductionEvent[] = [];
 
 		shows.forEach((show) => {
-			const start = new Date(show.timestamp);
+			const start = new Date(show.startDate);
 			start.setTime(start.getTime() - 1000 * 60 * 60 * 1.5); // 1.5 hours before show start
 
-			const end = new Date(show.timestamp);
+			const end = new Date(show.startDate);
 			end.setTime(end.getTime() + 1000 * 60 * 60 * 3.5); // 3.5 hours after show start
 
 			if (start < currentDate && currentDate < end) {
@@ -20,7 +21,7 @@
 		if (nextShows.length === 0) {
 			shows.forEach((show) => {
 				// todo: iterate over all shows and find the nearest to current time
-				const start = new Date(show.timestamp);
+				const start = new Date(show.startDate);
 				start.setTime(start.getTime() - 1000 * 60 * 60 * 1.5); // 1.5 hours before show start
 
 				if (start > currentDate && nextShows.length === 0) {
@@ -32,7 +33,10 @@
 		return nextShows;
 	}
 
-	function getNextShowIterator(shows: SingleShow[], iterator: number): SingleShow | undefined {
+	function getNextShowIterator(
+		shows: ProductionEvent[],
+		iterator: number
+	): ProductionEvent | undefined {
 		if (iterator < 0 || iterator >= shows.length) {
 			return undefined;
 		}
@@ -44,12 +48,12 @@
 	const showData = $derived(data.showData);
 
 	let currentTime = $state(() => (data.date ? new Date(data.date) : new Date(Date.now())));
-	let nextShowsLive = $derived(getNextShows(showData.shows, currentTime()));
+	let nextShowsLive = $derived(getNextShows(showData.events, currentTime()));
 	let numberOfNextShows = $derived(nextShowsLive.length);
 
 	let showIterator = $state(0);
 	let show = $derived(getNextShowIterator(nextShowsLive, showIterator));
-	let walkInCovers = $derived(show?.cast.roles.filter((role) => role.isWalkInCover));
+	let walkInCovers = $derived(show?.cast.filter((role) => role.walkInCover));
 
 	const MAX_PROGRESS_TIME = 15; // in seconds
 	let progress = $state(0);
@@ -89,36 +93,36 @@
 		{show?.companies.join(', ')}
 		<br />
 		<span class="c-prim-fg-1 fw-strong">
-			{new Date(show.timestamp).toLocaleString('de-DE', {
+			{new Date(show.startDate).toLocaleString('de-DE', {
 				dateStyle: 'full',
 				timeStyle: 'short'
 			})} Uhr
 		</span>
 
-		{#if show.isPublic === false || show.customName}
+		{#if show.isPublic === false || show.name}
 			<br />
 			<span class="c-fg-3">
 				{#if show.isPublic === false}
-					Nicht öffentliche Veranstaltung{#if show.customName}: {show.customName}{/if}
+					Nicht öffentliche Veranstaltung{#if show.name}: {show.name}{/if}
 				{:else}
-					{show.customName}
+					{show.name}
 				{/if}
 			</span>
 		{/if}
 	</p>
 
-	{#if show.cast.roles.length > 0}
+	{#if show.cast.length > 0}
 		<h2>Cast</h2>
 
 		<ul class="dot-list">
-			{#each show.cast.roles as role}
+			{#each show.cast as role}
 				<li class="dot-list__item">
-					<span class="dot-list__label fw-strong"><span>{role.role}</span></span>
+					<span class="dot-list__label fw-strong"><span>{role.roleName}</span></span>
 					<span class="dot-list__label no-hyphens"
 						><span
-							>{role.persons
+							>{personNames(role.members, showData.people)
 								.map((str) => {
-									if (role.isWalkInCover) {
+									if (role.walkInCover) {
 										str = str + '*';
 									}
 									return str.replace(' ', ' ');
@@ -135,8 +139,8 @@
 				<p>
 					In der heutigen Show wird auf Grund von krankheitsbedingten Ausfällen
 					{#each walkInCovers as role}
-						<span class="fw-strong">{role.role.replaceAll(' ', ' ')}</span> gespielt von
-						<span class="fw-strong">{role.persons.join(', ')}</span
+						<span class="fw-strong">{role.roleName.replaceAll(' ', ' ')}</span> gespielt von
+						<span class="fw-strong">{personNames(role.members, showData.people).join(', ')}</span
 						>{#if role !== walkInCovers[walkInCovers.length - 1]}{' und '}{:else}.{/if}
 					{/each}
 				</p>
@@ -144,11 +148,13 @@
 		{/if}
 	{/if}
 
-	{#if show.cast.ensemble.length > 0}
+	{#if show.ensemble.length > 0}
 		<h2>Ensemble</h2>
 
 		<p class="no-hyphens ta-center">
-			{show.cast.ensemble.map((str) => str.replace(' ', ' ')).join(', ')}
+			{personNames(show.ensemble, showData.people)
+				.map((str) => str.replace(' ', ' '))
+				.join(', ')}
 		</p>
 	{/if}
 {/if}

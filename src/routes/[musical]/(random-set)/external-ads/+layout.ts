@@ -5,16 +5,11 @@ import sharedStore, { parseItemParam } from '../store.svelte';
 export const load = (async ({ url, params, parent }) => {
 	const { showData } = await parent();
 
-	if (showData.common.externalAds === undefined || showData.common.externalAds.length === 0) {
-		error(404, 'No external ads found for ' + showData.common.title);
+	if (showData.externalAds.length === 0) {
+		error(404, 'No external ads found for ' + showData.name);
 	}
 
-	const numItem = parseItemParam(
-		url,
-		params.musical,
-		'external-ads',
-		showData.common.externalAds.length
-	);
+	const numItem = parseItemParam(url, params.musical, 'external-ads', showData.externalAds.length);
 	sharedStore.numItem.set(numItem);
 
 	return {};

@@ -7,7 +7,7 @@
 </script>
 
 <main>
-	<h1>{showData.common.title}</h1>
+	<h1>{showData.name}</h1>
 	<h2>OnSight Ads</h2>
 
 	<ul aria-label="Nutzbare Einzelanzeigen">

@@ -9,7 +9,7 @@
 
 	<ul aria-label="Erreichbare Produktionen">
 		{#each data.productionsData.productions as production}
-			<li><a href="/{production.slug}">{production.title}</a></li>
+			<li><a href="/{production.slug}">{production.name}</a></li>
 		{/each}
 	</ul>
 </main>
