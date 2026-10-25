@@ -90,8 +90,10 @@
 	</p>
 {:else}
 	<p class="ta-center">
-		{show?.companies.join(', ')}
-		<br />
+		{#if showData.companies.length > 1}
+			{show.companies.join(', ')}
+			<br />
+		{/if}
 		<span class="c-prim-fg-1 fw-strong">
 			{new Date(show.startDate).toLocaleString('de-DE', {
 				dateStyle: 'full',

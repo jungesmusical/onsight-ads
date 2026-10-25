@@ -92,8 +92,10 @@
 	</p>
 {:else}
 	<p class="ta-center">
-		{show?.companies.join(', ')}
-		<br />
+		{#if showData.companies.length > 1}
+			{show.companies.join(', ')}
+			<br />
+		{/if}
 		<span class="c-prim-fg-1 fw-strong">
 			{new Date(show.startDate).toLocaleString('de-DE', {
 				dateStyle: 'full',
@@ -117,7 +119,7 @@
 
 	{#if show.conductors.length > 0}
 		<p class="ta-center">
-			Die Show wird dirigiert von {listFormat
+			Die heutige Show wird dirigiert von {listFormat
 				.format(personNames(show.conductors, showData.people))
 				.replaceAll(' ', ' ')}.
 		</p>
