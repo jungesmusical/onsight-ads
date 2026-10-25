@@ -4,8 +4,15 @@
 	const {
 		image,
 		class: className,
-		loading
-	}: { image: Image; class?: string; loading?: 'lazy' | 'eager' } = $props();
+		loading,
+		objectPosition = image.focus
+	}: {
+		image: Image;
+		class?: string;
+		loading?: 'lazy' | 'eager';
+		/** Überschreibt den Fokuspunkt des Bildes. */
+		objectPosition?: string;
+	} = $props();
 </script>
 
 <picture>
@@ -19,6 +26,6 @@
 		width={image.width}
 		height={image.height}
 		{loading}
-		style="object-position: {image.focus}"
+		style="object-position: {objectPosition}"
 	/>
 </picture>
