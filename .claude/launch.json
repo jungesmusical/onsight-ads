@@ -1,0 +1,26 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "dev",
+			"runtimeExecutable": "npm",
+			"runtimeArgs": ["run", "dev", "--", "--port", "5173"],
+			"port": 5173
+		},
+		{
+			"name": "dev-photos",
+			"runtimeExecutable": "env",
+			"runtimeArgs": [
+				"PUBLIC_SHOW_CAST_PHOTOS=true",
+				"PUBLIC_SHOW_ORCHESTRA_PHOTOS=true",
+				"npm",
+				"run",
+				"dev",
+				"--",
+				"--port",
+				"5173"
+			],
+			"port": 5173
+		}
+	]
+}

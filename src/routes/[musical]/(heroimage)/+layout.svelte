@@ -43,7 +43,7 @@
 	.artwork {
 		position: relative;
 		isolation: isolate;
-		margin: -2rem 0 -5%;
+		margin: -2rem 0 0;
 		padding: 0;
 		max-width: none;
 		aspect-ratio: 21 / 12;
@@ -54,6 +54,12 @@
 	main {
 		position: relative;
 		z-index: 1;
+		padding-bottom: var(--xl);
+	}
+
+	/* Rückt den Inhalt in den ausgeblendeten Bereich des Hero-Bilds */
+	.artwork + main {
+		margin-top: calc(var(--xxl) * -1);
 	}
 
 	.artwork :global(picture) {

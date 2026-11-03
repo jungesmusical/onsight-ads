@@ -54,6 +54,15 @@ If `playlist` is not provided and the current route includes a musical slug, the
 - `http://localhost:5173/hamilton?kiosk=1&playlist=/hamilton/cast,/hamilton/gallery`
 - `http://localhost:5173/hamilton?kiosk=1&disableHeaderVideo=1`
 
+## Environment variables
+
+- `PUBLIC_HOMEPAGE_HOST`
+  - Base URL of the Kirby CMS (e.g. `https://www.jungesmusical.de`).
+- `PUBLIC_SHOW_CAST_PHOTOS` / `PUBLIC_SHOW_ORCHESTRA_PHOTOS`
+  - Set to `true` to show the cast or orchestra as a photo grid instead of a text list.
+  - Read at runtime, so they can be changed per deployment without a rebuild.
+  - The grid picks its column count so that the whole page fits on the screen without scrolling.
+
 ## Developing
 
 Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:

@@ -7,10 +7,16 @@
 
 	const {
 		showData,
+		title,
+		showCompanies = true,
 		date,
 		children
 	}: {
 		showData: Production;
+		/** Überschrift der Seite; als Funktion, wenn sie von der jeweiligen Show abhängt. */
+		title: string | ((show: ProductionEvent) => string);
+		/** Blendet die Besetzung (z. B. „Premieren-Besetzung“) aus, wenn sie für die Seite egal ist. */
+		showCompanies?: boolean;
 		/** Fixer Zeitpunkt statt der aktuellen Uhrzeit, z. B. zum Testen. */
 		date?: string | null;
 		children: Snippet<[ProductionEvent]>;
@@ -24,6 +30,13 @@
 
 	const nextShows = $derived(getNextShows(showData, now));
 	const show = $derived(nextShows[showIterator]);
+
+	function subtitleLines(show: ProductionEvent): string[] {
+		return [
+			showCompanies && showData.companies.length > 1 ? show.companies.join(', ') : null,
+			show.isPublic ? null : 'Nicht öffentliche Veranstaltung'
+		].filter((line) => line !== null);
+	}
 
 	$effect(() => {
 		const interval = setInterval(() => {
@@ -60,29 +73,38 @@
 		}).format(now)}
 	</p>
 {:else}
-	<p class="ta-center">
-		{#if showData.companies.length > 1}
-			{show.companies.join(', ')}
-			<br />
-		{/if}
-		<span class="c-prim-fg-1 fw-strong">
+	{@const subtitle = subtitleLines(show)}
+	<header class="ta-center">
+		<h2>{typeof title === 'string' ? title : title(show)}</h2>
+		<p class="date c-prim-fg-1 fw-strong">
 			{new Date(show.startDate).toLocaleString('de-DE', {
 				dateStyle: 'full',
 				timeStyle: 'short'
-			})} Uhr
-		</span>
-
-		{#if show.isPublic === false || show.name}
-			<br />
-			<span class="c-fg-3">
-				{#if show.isPublic === false}
-					Nicht öffentliche Veranstaltung{#if show.name}: {show.name}{/if}
-				{:else}
-					{show.name}
-				{/if}
-			</span>
-		{/if}
-	</p>
+			})} Uhr{#if show.name}{' '}({show.name}){/if}
+		</p>
+		{#each subtitle as line}
+			<p class="c-fg-3">{line}</p>
+		{/each}
+	</header>
 
 	{@render children(show)}
 {/if}
+
+<style>
+	header {
+		margin-block: var(--l) var(--m);
+
+		& > * {
+			margin: 0;
+		}
+	}
+
+	.date {
+		font-size: var(--fs-xs);
+		letter-spacing: var(--lsp-wide);
+	}
+
+	h2 {
+		margin-bottom: var(--xxs);
+	}
+</style>
