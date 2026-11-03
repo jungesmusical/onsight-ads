@@ -15,20 +15,35 @@
 	} = $props();
 </script>
 
-<ul class="dot-list">
+<dl class="credits">
 	{#each roles as role}
-		<li class="dot-list__item">
-			<span class="dot-list__label fw-strong"><span>{role.roleName}</span></span>
-			<span class="dot-list__label no-hyphens"
-				><span
-					>{joinNames(
-						personNames(role.members, people).map((name) =>
-							markWalkIn && role.walkInCover ? name + '*' : name
-						),
-						{ withAnd: false }
-					)}</span
-				></span
-			>
-		</li>
+		<dt class="fw-strong">{role.roleName}</dt>
+		<dd class="no-hyphens">
+			{joinNames(
+				personNames(role.members, people).map((name) =>
+					markWalkIn && role.walkInCover ? name + '*' : name
+				),
+				{ withAnd: false }
+			)}
+		</dd>
 	{/each}
-</ul>
+</dl>
+
+<style>
+	.credits {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--xxs) 1rem;
+		align-items: start;
+	}
+
+	dt {
+		text-align: end;
+		text-wrap: balance;
+	}
+
+	dd {
+		margin: 0;
+		text-wrap: balance;
+	}
+</style>
