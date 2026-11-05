@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Production } from '$lib';
 	import Picture from '$lib/Picture.svelte';
+	import { rotationHold } from '$lib/rotationHold';
 	import type { PageData } from './$types';
 	import * as sharedStore from '../store.svelte';
 
@@ -13,50 +14,71 @@
 	});
 
 	const singleAd = $derived(showData.externalAds[currentNumItem]);
+
+	// the kiosk waits for the first full playthrough of a video ad only
+	$effect(() => {
+		rotationHold.set(singleAd?.media?.type === 'video');
+		return () => rotationHold.set(false);
+	});
+
+	function replayAfterEnd(event: Event) {
+		rotationHold.set(false);
+		(event.currentTarget as HTMLVideoElement).play();
+	}
 </script>
 
 {#if singleAd?.media?.type === 'image'}
-	<Picture image={singleAd.media} class="ad-image" />
+	<Picture image={singleAd.media} class="ad-media" />
 {:else if singleAd?.media?.type === 'video'}
-	<video autoplay loop muted playsinline poster={singleAd.media.poster ?? undefined}>
-		<source src={singleAd.media.src} type={singleAd.media.mimeType} />
-		Your browser does not support the video tag.
-	</video>
+	{#key singleAd.media.src}
+		<video
+			class="ad-media"
+			autoplay
+			muted
+			playsinline
+			disablepictureinpicture
+			width={singleAd.media.width ?? undefined}
+			height={singleAd.media.height ?? undefined}
+			poster={singleAd.media.poster ?? undefined}
+			onended={replayAfterEnd}
+		>
+			<!-- a failed source fires `error` here, not on the video -->
+			<source
+				src={singleAd.media.src}
+				type={singleAd.media.mimeType}
+				onerror={() => rotationHold.set(false)}
+			/>
+		</video>
+	{/key}
 {:else}
 	<p>Kein gültiges Werbematerial gefunden.</p>
 {/if}
 
-<header class="flow flow--gap-0 ta-center">
-	{#if singleAd?.company}
-		<p class="fs-xxs c-fg-3">Anzeige von</p>
-		<h1 class=" typo-heading-2">{singleAd.company}</h1>
-	{/if}
-</header>
+{#if singleAd?.company}
+	<p class="ad-notice fs-xxs c-fg-3">Anzeige von {singleAd.company}</p>
+{/if}
 
 <style lang="scss">
-	header {
-		align-self: center;
-		justify-self: center;
-	}
-
-	:global(picture:has(> .ad-image)) {
+	:global(picture:has(> .ad-media)) {
 		display: block;
-		align-self: stretch;
-		justify-self: stretch;
 		width: 100%;
 		height: 100%;
 	}
 
-	:global(.ad-image) {
+	:global(.ad-media) {
+		display: block;
 		width: 100%;
 		height: 100%;
-		aspect-ratio: 1 / 1.414;
 		object-fit: contain;
 	}
 
-	video {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
+	.ad-notice {
+		position: absolute;
+		right: var(--xs);
+		bottom: var(--xs);
+		margin: 0;
+		padding: 0.2em 0.5em;
+		border-radius: 0.25em;
+		background: rgb(0 0 0 / 0.5);
 	}
 </style>

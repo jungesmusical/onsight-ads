@@ -14,6 +14,8 @@ type Image = {
 type Video = {
 	src: string;
 	mimeType: string;
+	width: number | null;
+	height: number | null;
 	poster: string | null;
 };
 

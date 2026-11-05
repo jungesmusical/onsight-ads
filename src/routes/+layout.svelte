@@ -2,8 +2,10 @@
 	import '../app.pcss';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
+	import { rotationHold } from '$lib/rotationHold';
 	import { onDestroy, onMount } from 'svelte';
 	import type { Snippet } from 'svelte';
+	import { get } from 'svelte/store';
 	import type { LayoutData } from './$types';
 
 	const { children, data } = $props<{ children: Snippet; data: LayoutData }>();
@@ -91,6 +93,7 @@
 	}
 
 	let timer: ReturnType<typeof setInterval> | undefined;
+	let advancePending = false;
 
 	function stopTimer() {
 		if (timer !== undefined) {
@@ -110,28 +113,48 @@
 			return;
 		}
 
-		timer = setInterval(async () => {
-			const currentPath = normalizePathname(page.url.pathname);
-			const playlist = getCurrentPlaylist(currentPath);
-
-			if (playlist.length < 2) {
+		timer = setInterval(() => {
+			if (get(rotationHold)) {
+				advancePending = true;
 				return;
 			}
 
-			const index = playlist.indexOf(currentPath);
-			const nextIndex = index === -1 ? 0 : (index + 1) % playlist.length;
-			const nextPath = playlist[nextIndex];
-
-			await goto(buildKioskUrl(nextPath), {
-				replaceState: true,
-				noScroll: true,
-				keepFocus: true
-			});
+			advance();
 		}, intervalMilliseconds);
+	}
+
+	async function advance() {
+		const currentPath = normalizePathname(page.url.pathname);
+		const playlist = getCurrentPlaylist(currentPath);
+
+		if (playlist.length < 2) {
+			return;
+		}
+
+		const index = playlist.indexOf(currentPath);
+		const nextIndex = index === -1 ? 0 : (index + 1) % playlist.length;
+		const nextPath = playlist[nextIndex];
+
+		await goto(buildKioskUrl(nextPath), {
+			replaceState: true,
+			noScroll: true,
+			keepFocus: true
+		});
 	}
 
 	onMount(() => {
 		startTimer();
+
+		const unsubscribeHold = rotationHold.subscribe((hold) => {
+			if (hold || !advancePending) {
+				return;
+			}
+
+			advancePending = false;
+			// restart so the next page gets its full interval
+			startTimer();
+			advance();
+		});
 
 		const onVisibilityChange = () => {
 			if (document.hidden) {
@@ -146,6 +169,7 @@
 
 		return () => {
 			document.removeEventListener('visibilitychange', onVisibilityChange);
+			unsubscribeHold();
 			stopTimer();
 		};
 	});

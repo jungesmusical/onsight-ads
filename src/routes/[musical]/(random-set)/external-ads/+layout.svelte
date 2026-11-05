@@ -10,17 +10,13 @@
 
 <style>
 	main {
+		position: relative;
 		max-width: none;
+		box-sizing: border-box;
 		padding: var(--m);
-		gap: var(--m);
-		max-height: 100%;
-		max-height: 100vh;
-		height: 100%;
-		height: calc(100vh - var(--m) - var(--m));
+		height: 100vh;
 		overflow: hidden;
 		display: grid;
-		align-items: stretch;
-		grid-template-columns: 1fr;
-		grid-template-rows: 7fr 1fr;
+		grid-template: 100% / 100%;
 	}
 </style>
