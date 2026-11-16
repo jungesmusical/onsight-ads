@@ -1,0 +1,73 @@
+# Review labels say what happened on a pull request's latest commit:
+#
+#   ai-reviewed     an AI branch review ran on it and its findings are settled
+#   human-reviewed  a person read the diff
+#   human-tested    a person tried the change (preview, sandbox or for real)
+#
+# A label is set by hand once the step is done. Every new push takes all
+# three off again, because the review or test was of a commit that is no
+# longer the latest. The labels themselves are created on the first run on
+# main, or by "Run workflow".
+#
+# pull_request_target, not pull_request: Dependabot's pull requests get a
+# read-only token under pull_request. The job checks out nothing and runs no
+# code from the pull request, so the base's write token is safe here.
+---
+name: Review labels
+
+on: # yamllint disable-line rule:truthy
+  pull_request_target:
+    types: [synchronize]
+  push:
+    branches: [main]
+    paths: [.github/workflows/review-labels.yml]
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  create:
+    name: Create the review labels
+    if: github.event_name != 'pull_request_target'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Create or update the labels
+        run: |
+          gh label create ai-reviewed --force --color 8a3ffc \
+            --description \
+            'An AI branch review ran on the latest commit; findings settled'
+          gh label create human-reviewed --force --color 0f62fe \
+            --description 'A person read the diff of the latest commit'
+          gh label create human-tested --force --color 24a148 \
+            --description 'A person tried the latest commit'
+
+  remove:
+    name: Take the review labels off after a push
+    if: github.event_name == 'pull_request_target'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      PR: ${{ github.event.pull_request.number }}
+      LABELS: ${{ join(github.event.pull_request.labels.*.name, '\n') }}
+    steps:
+      - name: Remove ai-reviewed, human-reviewed and human-tested
+        run: |
+          printf '%b\n' "$LABELS" | while IFS= read -r label; do
+            case "$label" in
+              ai-reviewed | human-reviewed | human-tested)
+                # Someone may have taken it off meanwhile; that is fine.
+                gh api -X DELETE --silent \
+                  "repos/$GH_REPO/issues/$PR/labels/$label" || true
+                echo "Removed $label: it was given to an earlier commit."
+                ;;
+            esac
+          done
